@@ -1,0 +1,20 @@
+{
+  "name": "telebotscraper",
+  "version": "1.0.0",
+  "description": "Telegram Bot API documentation scraper.",
+  "main": "index.js",
+  "repository": "https://github.com/devmattrick/telebotscraper.git",
+  "author": "Matthew McCune <contact@matthew.cx>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "ts": "node ts.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.3",
+    "fs-extra": "^7.0.1",
+    "handlebars": "^4.1.2"
+  }
+}

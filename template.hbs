@@ -1,0 +1,12 @@
+/**
+ * {{schema.description}}
+ */
+export default interface {{schema.name}} {
+  {{#each schema.fields as |field fieldKey|}}
+  /**
+   * {{field.description}}
+   */
+  {{field.name}}{{#if field.optional}}?{{/if}}: {{field.type}};
+
+  {{/each}}
+}
