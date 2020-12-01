@@ -1,0 +1,28 @@
+{{#each schemas as |type typeKey|}}
+import {{type.name}} from './classes/{{type.name}}';
+{{/each}}
+import InputFile from './classes/InputFile';
+
+export default abstract class TelegramApi {
+    readonly BASE_URL = 'https://api.telegram.org/bot';
+
+    protected abstract fetch(methodName: string, params: object): Promise<any>;
+
+    protected getFullUrl(token: string, methodName: string){
+        return this.BASE_URL + token + '/' + methodName;
+    }
+
+    {{#each methods as |method methodKey|}}
+    /**
+     *
+    {{#each method.fields as |field fieldKey|}}
+     * @param {{field.name}} {{field.description}}
+    {{/each}}
+     */
+    async {{ method.name }}({{#each method.fields as |field fieldKey|}}{{#unless field.optional}}{{field.name}}:{{field.type}}, {{/unless}}{{/each}}{{#each method.fields as |field fieldKey|}}{{#if field.optional}}{{field.name}}?:{{field.type}}, {{/if}}{{/each}}){
+        return this.fetch("{{ method.name }}",{{curly 1}}{{#each method.fields as |field fieldKey|}}{{field.name}}:{{field.name}},{{/each}}{{curly}});
+    }
+
+    {{/each}}
+
+}

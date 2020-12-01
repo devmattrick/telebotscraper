@@ -6,6 +6,7 @@ const template = Handlebars.compile(readFileSync("template.hbs").toString());
 
 const TYPE_CONVERSIONS = {
   "String": "string",
+  "Float number": "number",
   "Integer": "number",
   "Float": "number",
   "Boolean": "boolean",
