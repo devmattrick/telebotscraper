@@ -1,0 +1,22 @@
+{{#each schema.complexTypes as |type typeKey|}}
+import {{type}} from './{{type}}';
+{{/each}}
+
+/**
+* {{schema.description}}
+*/
+export default class {{schema.name}} {
+  {{#each schema.fields as |field fieldKey|}}
+  /**
+  * {{field.description}}
+  */
+  {{field.name}}{{#if field.optional}}?{{/if}}: {{field.type}};
+
+  {{/each}}
+  constructor(obj: { {{#each schema.fields as |field fieldKey|}}{{field.name}}{{#if field.optional}}?{{/if}}: {{field.type}},{{/each}} } ) {
+    {{#each schema.fields as |field fieldKey|}}
+    this.{{field.name}} = obj.{{field.name}};
+    {{/each}}
+  }
+ 
+}
