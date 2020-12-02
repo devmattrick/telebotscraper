@@ -25,7 +25,7 @@ export default class ReplyKeyboardMarkup {
   readonly selective?: boolean;
 
   constructor(obj: { keyboard: KeyboardButton[][], resize_keyboard?: boolean, one_time_keyboard?: boolean, selective?: boolean,  } ) {
-    this.keyboard = obj?.keyboard?.map(o=>new KeyboardButton[](o))
+    this.keyboard = obj?.keyboard?.map(o=>o.map(o2=>new KeyboardButton(o2)))
     this.resize_keyboard = obj?.resize_keyboard
     this.one_time_keyboard = obj?.one_time_keyboard
     this.selective = obj?.selective

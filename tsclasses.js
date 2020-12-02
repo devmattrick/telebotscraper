@@ -14,9 +14,10 @@ Handlebars.registerHelper('getDeclaration', function (name, type) {
   const l = String(type).charAt(0);
   const capital = (l === l.toUpperCase());
   if (capital) {
-    const isArr = type.indexOf("[]") >= 0;
-    if (isArr) {
-      return `this.${name} = obj?.${name}?.map(o=>new ${type.replace("[]","")}(o))`;
+    if (type.indexOf("[][]") >= 0) {
+      return `this.${name} = obj?.${name}?.map(o=>o.map(o2=>new ${type.replace("[][]", "")}(o2)))`;
+    } else if (type.indexOf("[]") >= 0) {
+      return `this.${name} = obj?.${name}?.map(o=>new ${type.replace("[]", "")}(o))`;
     } else {
       return `this.${name} = obj?.${name} && new ${type}(obj.${name})`;
     }
