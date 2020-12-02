@@ -15,7 +15,7 @@ export default class {{schema.name}} {
   {{/each}}
   constructor(obj: { {{#each schema.fields as |field fieldKey|}}{{#unless field.optional}}{{field.name}}: {{field.type}}, {{/unless}}{{/each}}{{#each schema.fields as |field fieldKey|}}{{#if field.optional}}{{field.name}}?: {{field.type}}, {{/if}}{{/each}} } ) {
     {{#each schema.fields as |field fieldKey|}}
-    this.{{field.name}} = obj.{{field.name}};
+    this.{{field.name}} = obj?.{{field.name}};
     {{/each}}
   }
  
