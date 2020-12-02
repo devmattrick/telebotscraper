@@ -36,12 +36,12 @@ export default class StickerSet {
   readonly thumb?: PhotoSize;
 
   constructor(obj: { name: string, title: string, is_animated: boolean, contains_masks: boolean, stickers: Sticker[], thumb?: PhotoSize,  } ) {
-    this.name = obj?.name
-    this.title = obj?.title
-    this.is_animated = obj?.is_animated
-    this.contains_masks = obj?.contains_masks
-    this.stickers = obj?.stickers?.map(o=>new Sticker(o))
-    this.thumb = obj?.thumb && new PhotoSize(obj.thumb)
+    this.name = obj?.name;
+    this.title = obj?.title;
+    this.is_animated = obj?.is_animated;
+    this.contains_masks = obj?.contains_masks;
+    this.stickers = obj?.stickers?.map(o=>new Sticker(o));
+    this.thumb = obj?.thumb && new PhotoSize(obj.thumb);
   }
  
 }

@@ -60,16 +60,16 @@ export default class InlineQueryResultVoice {
   readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, voice_url: string, title: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], voice_duration?: number, reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.voice_url = obj?.voice_url
-    this.title = obj?.title
-    this.caption = obj?.caption
-    this.parse_mode = obj?.parse_mode
-    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
-    this.voice_duration = obj?.voice_duration
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.voice_url = obj?.voice_url;
+    this.title = obj?.title;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o));
+    this.voice_duration = obj?.voice_duration;
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
   }
  
 }

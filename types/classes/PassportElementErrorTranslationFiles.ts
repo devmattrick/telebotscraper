@@ -24,10 +24,10 @@ export default class PassportElementErrorTranslationFiles {
   readonly message: string;
 
   constructor(obj: { source: string, type: string, file_hashes: string[], message: string,  } ) {
-    this.source = obj?.source
-    this.type = obj?.type
-    this.file_hashes = obj?.file_hashes
-    this.message = obj?.message
+    this.source = obj?.source;
+    this.type = obj?.type;
+    this.file_hashes = obj?.file_hashes;
+    this.message = obj?.message;
   }
  
 }

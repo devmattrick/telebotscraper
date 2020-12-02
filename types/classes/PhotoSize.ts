@@ -29,11 +29,11 @@ export default class PhotoSize {
   readonly file_size?: number;
 
   constructor(obj: { file_id: string, file_unique_id: string, width: number, height: number, file_size?: number,  } ) {
-    this.file_id = obj?.file_id
-    this.file_unique_id = obj?.file_unique_id
-    this.width = obj?.width
-    this.height = obj?.height
-    this.file_size = obj?.file_size
+    this.file_id = obj?.file_id;
+    this.file_unique_id = obj?.file_unique_id;
+    this.width = obj?.width;
+    this.height = obj?.height;
+    this.file_size = obj?.file_size;
   }
  
 }

@@ -27,10 +27,10 @@ export default class File {
   readonly file_path?: string;
 
   constructor(obj: { file_id: string, file_unique_id: string, file_size?: number, file_path?: string,  } ) {
-    this.file_id = obj?.file_id
-    this.file_unique_id = obj?.file_unique_id
-    this.file_size = obj?.file_size
-    this.file_path = obj?.file_path
+    this.file_id = obj?.file_id;
+    this.file_unique_id = obj?.file_unique_id;
+    this.file_size = obj?.file_size;
+    this.file_path = obj?.file_path;
   }
  
 }

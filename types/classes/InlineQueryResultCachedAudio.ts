@@ -50,14 +50,14 @@ export default class InlineQueryResultCachedAudio {
   readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, audio_file_id: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.audio_file_id = obj?.audio_file_id
-    this.caption = obj?.caption
-    this.parse_mode = obj?.parse_mode
-    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.audio_file_id = obj?.audio_file_id;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o));
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
   }
  
 }

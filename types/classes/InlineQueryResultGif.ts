@@ -80,20 +80,20 @@ export default class InlineQueryResultGif {
   readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, gif_url: string, thumb_url: string, gif_width?: number, gif_height?: number, gif_duration?: number, thumb_mime_type?: string, title?: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.gif_url = obj?.gif_url
-    this.gif_width = obj?.gif_width
-    this.gif_height = obj?.gif_height
-    this.gif_duration = obj?.gif_duration
-    this.thumb_url = obj?.thumb_url
-    this.thumb_mime_type = obj?.thumb_mime_type
-    this.title = obj?.title
-    this.caption = obj?.caption
-    this.parse_mode = obj?.parse_mode
-    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.gif_url = obj?.gif_url;
+    this.gif_width = obj?.gif_width;
+    this.gif_height = obj?.gif_height;
+    this.gif_duration = obj?.gif_duration;
+    this.thumb_url = obj?.thumb_url;
+    this.thumb_mime_type = obj?.thumb_mime_type;
+    this.title = obj?.title;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o));
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
   }
  
 }

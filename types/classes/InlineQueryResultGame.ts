@@ -25,10 +25,10 @@ export default class InlineQueryResultGame {
   readonly reply_markup?: InlineKeyboardMarkup;
 
   constructor(obj: { type: string, id: string, game_short_name: string, reply_markup?: InlineKeyboardMarkup,  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.game_short_name = obj?.game_short_name
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.game_short_name = obj?.game_short_name;
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
   }
  
 }

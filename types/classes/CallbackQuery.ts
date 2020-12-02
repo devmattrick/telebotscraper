@@ -41,13 +41,13 @@ export default class CallbackQuery {
   readonly game_short_name?: string;
 
   constructor(obj: { id: string, from: User, chat_instance: string, message?: Message, inline_message_id?: string, data?: string, game_short_name?: string,  } ) {
-    this.id = obj?.id
-    this.from = obj?.from && new User(obj.from)
-    this.message = obj?.message && new Message(obj.message)
-    this.inline_message_id = obj?.inline_message_id
-    this.chat_instance = obj?.chat_instance
-    this.data = obj?.data
-    this.game_short_name = obj?.game_short_name
+    this.id = obj?.id;
+    this.from = obj?.from && new User(obj.from);
+    this.message = obj?.message && new Message(obj.message);
+    this.inline_message_id = obj?.inline_message_id;
+    this.chat_instance = obj?.chat_instance;
+    this.data = obj?.data;
+    this.game_short_name = obj?.game_short_name;
   }
  
 }

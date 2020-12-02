@@ -15,8 +15,8 @@ export default class UserProfilePhotos {
   readonly photos: PhotoSize[][];
 
   constructor(obj: { total_count: number, photos: PhotoSize[][],  } ) {
-    this.total_count = obj?.total_count
-    this.photos = obj?.photos?.map(o=>o.map(o2=>new PhotoSize(o2)))
+    this.total_count = obj?.total_count;
+    this.photos = obj?.photos?.map(o=>o.map(o2=>new PhotoSize(o2)));
   }
  
 }

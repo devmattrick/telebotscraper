@@ -75,19 +75,19 @@ export default class InlineQueryResultPhoto {
   readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, photo_url: string, thumb_url: string, photo_width?: number, photo_height?: number, title?: string, description?: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.photo_url = obj?.photo_url
-    this.thumb_url = obj?.thumb_url
-    this.photo_width = obj?.photo_width
-    this.photo_height = obj?.photo_height
-    this.title = obj?.title
-    this.description = obj?.description
-    this.caption = obj?.caption
-    this.parse_mode = obj?.parse_mode
-    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.photo_url = obj?.photo_url;
+    this.thumb_url = obj?.thumb_url;
+    this.photo_width = obj?.photo_width;
+    this.photo_height = obj?.photo_height;
+    this.title = obj?.title;
+    this.description = obj?.description;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o));
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
   }
  
 }

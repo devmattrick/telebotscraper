@@ -14,8 +14,8 @@ export default class BotCommand {
   readonly description: string;
 
   constructor(obj: { command: string, description: string,  } ) {
-    this.command = obj?.command
-    this.description = obj?.description
+    this.command = obj?.command;
+    this.description = obj?.description;
   }
  
 }

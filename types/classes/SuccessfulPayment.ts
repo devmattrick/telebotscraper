@@ -40,13 +40,13 @@ export default class SuccessfulPayment {
   readonly provider_payment_charge_id: string;
 
   constructor(obj: { currency: string, total_amount: number, invoice_payload: string, telegram_payment_charge_id: string, provider_payment_charge_id: string, shipping_option_id?: string, order_info?: OrderInfo,  } ) {
-    this.currency = obj?.currency
-    this.total_amount = obj?.total_amount
-    this.invoice_payload = obj?.invoice_payload
-    this.shipping_option_id = obj?.shipping_option_id
-    this.order_info = obj?.order_info && new OrderInfo(obj.order_info)
-    this.telegram_payment_charge_id = obj?.telegram_payment_charge_id
-    this.provider_payment_charge_id = obj?.provider_payment_charge_id
+    this.currency = obj?.currency;
+    this.total_amount = obj?.total_amount;
+    this.invoice_payload = obj?.invoice_payload;
+    this.shipping_option_id = obj?.shipping_option_id;
+    this.order_info = obj?.order_info && new OrderInfo(obj.order_info);
+    this.telegram_payment_charge_id = obj?.telegram_payment_charge_id;
+    this.provider_payment_charge_id = obj?.provider_payment_charge_id;
   }
  
 }

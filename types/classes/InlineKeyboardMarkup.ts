@@ -10,7 +10,7 @@ export default class InlineKeyboardMarkup {
   readonly inline_keyboard: InlineKeyboardButton[][];
 
   constructor(obj: { inline_keyboard: InlineKeyboardButton[][],  } ) {
-    this.inline_keyboard = obj?.inline_keyboard?.map(o=>o.map(o2=>new InlineKeyboardButton(o2)))
+    this.inline_keyboard = obj?.inline_keyboard?.map(o=>o.map(o2=>new InlineKeyboardButton(o2)));
   }
  
 }

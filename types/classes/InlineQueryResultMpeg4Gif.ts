@@ -80,20 +80,20 @@ export default class InlineQueryResultMpeg4Gif {
   readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, mpeg4_url: string, thumb_url: string, mpeg4_width?: number, mpeg4_height?: number, mpeg4_duration?: number, thumb_mime_type?: string, title?: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.mpeg4_url = obj?.mpeg4_url
-    this.mpeg4_width = obj?.mpeg4_width
-    this.mpeg4_height = obj?.mpeg4_height
-    this.mpeg4_duration = obj?.mpeg4_duration
-    this.thumb_url = obj?.thumb_url
-    this.thumb_mime_type = obj?.thumb_mime_type
-    this.title = obj?.title
-    this.caption = obj?.caption
-    this.parse_mode = obj?.parse_mode
-    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.mpeg4_url = obj?.mpeg4_url;
+    this.mpeg4_width = obj?.mpeg4_width;
+    this.mpeg4_height = obj?.mpeg4_height;
+    this.mpeg4_duration = obj?.mpeg4_duration;
+    this.thumb_url = obj?.thumb_url;
+    this.thumb_mime_type = obj?.thumb_mime_type;
+    this.title = obj?.title;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o));
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
   }
  
 }

@@ -29,11 +29,11 @@ export default class PassportElementErrorDataField {
   readonly message: string;
 
   constructor(obj: { source: string, type: string, field_name: string, data_hash: string, message: string,  } ) {
-    this.source = obj?.source
-    this.type = obj?.type
-    this.field_name = obj?.field_name
-    this.data_hash = obj?.data_hash
-    this.message = obj?.message
+    this.source = obj?.source;
+    this.type = obj?.type;
+    this.field_name = obj?.field_name;
+    this.data_hash = obj?.data_hash;
+    this.message = obj?.message;
   }
  
 }

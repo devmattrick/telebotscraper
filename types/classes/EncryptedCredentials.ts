@@ -19,9 +19,9 @@ export default class EncryptedCredentials {
   readonly secret: string;
 
   constructor(obj: { data: string, hash: string, secret: string,  } ) {
-    this.data = obj?.data
-    this.hash = obj?.hash
-    this.secret = obj?.secret
+    this.data = obj?.data;
+    this.hash = obj?.hash;
+    this.secret = obj?.secret;
   }
  
 }

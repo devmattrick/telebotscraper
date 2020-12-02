@@ -25,10 +25,10 @@ export default class KeyboardButton {
   readonly request_poll?: KeyboardButtonPollType;
 
   constructor(obj: { text: string, request_contact?: boolean, request_location?: boolean, request_poll?: KeyboardButtonPollType,  } ) {
-    this.text = obj?.text
-    this.request_contact = obj?.request_contact
-    this.request_location = obj?.request_location
-    this.request_poll = obj?.request_poll && new KeyboardButtonPollType(obj.request_poll)
+    this.text = obj?.text;
+    this.request_contact = obj?.request_contact;
+    this.request_location = obj?.request_location;
+    this.request_poll = obj?.request_poll && new KeyboardButtonPollType(obj.request_poll);
   }
  
 }

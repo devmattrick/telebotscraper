@@ -15,14 +15,14 @@ Handlebars.registerHelper('getDeclaration', function (name, type) {
   const capital = (l === l.toUpperCase());
   if (capital) {
     if (type.indexOf("[][]") >= 0) {
-      return `this.${name} = obj?.${name}?.map(o=>o.map(o2=>new ${type.replace("[][]", "")}(o2)))`;
+      return `this.${name} = obj?.${name}?.map(o=>o.map(o2=>new ${type.replace("[][]", "")}(o2)));`;
     } else if (type.indexOf("[]") >= 0) {
-      return `this.${name} = obj?.${name}?.map(o=>new ${type.replace("[]", "")}(o))`;
+      return `this.${name} = obj?.${name}?.map(o=>new ${type.replace("[]", "")}(o));`;
     } else {
-      return `this.${name} = obj?.${name} && new ${type}(obj.${name})`;
+      return `this.${name} = obj?.${name} && new ${type}(obj.${name});`;
     }
   } else {
-    return `this.${name} = obj?.${name}`;
+    return `this.${name} = obj?.${name};`;
   }
   return out;
 });

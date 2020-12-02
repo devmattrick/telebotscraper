@@ -29,11 +29,11 @@ export default class Contact {
   readonly vcard?: string;
 
   constructor(obj: { phone_number: string, first_name: string, last_name?: string, user_id?: number, vcard?: string,  } ) {
-    this.phone_number = obj?.phone_number
-    this.first_name = obj?.first_name
-    this.last_name = obj?.last_name
-    this.user_id = obj?.user_id
-    this.vcard = obj?.vcard
+    this.phone_number = obj?.phone_number;
+    this.first_name = obj?.first_name;
+    this.last_name = obj?.last_name;
+    this.user_id = obj?.user_id;
+    this.vcard = obj?.vcard;
   }
  
 }

@@ -49,15 +49,15 @@ export default class User {
   readonly supports_inline_queries?: boolean;
 
   constructor(obj: { id: number, is_bot: boolean, first_name: string, last_name?: string, username?: string, language_code?: string, can_join_groups?: boolean, can_read_all_group_messages?: boolean, supports_inline_queries?: boolean,  } ) {
-    this.id = obj?.id
-    this.is_bot = obj?.is_bot
-    this.first_name = obj?.first_name
-    this.last_name = obj?.last_name
-    this.username = obj?.username
-    this.language_code = obj?.language_code
-    this.can_join_groups = obj?.can_join_groups
-    this.can_read_all_group_messages = obj?.can_read_all_group_messages
-    this.supports_inline_queries = obj?.supports_inline_queries
+    this.id = obj?.id;
+    this.is_bot = obj?.is_bot;
+    this.first_name = obj?.first_name;
+    this.last_name = obj?.last_name;
+    this.username = obj?.username;
+    this.language_code = obj?.language_code;
+    this.can_join_groups = obj?.can_join_groups;
+    this.can_read_all_group_messages = obj?.can_read_all_group_messages;
+    this.supports_inline_queries = obj?.supports_inline_queries;
   }
  
 }

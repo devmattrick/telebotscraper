@@ -14,8 +14,8 @@ export default class Dice {
   readonly value: number;
 
   constructor(obj: { emoji: string, value: number,  } ) {
-    this.emoji = obj?.emoji
-    this.value = obj?.value
+    this.emoji = obj?.emoji;
+    this.value = obj?.value;
   }
  
 }

@@ -20,9 +20,9 @@ export default class PollAnswer {
   readonly option_ids: number[];
 
   constructor(obj: { poll_id: string, user: User, option_ids: number[],  } ) {
-    this.poll_id = obj?.poll_id
-    this.user = obj?.user && new User(obj.user)
-    this.option_ids = obj?.option_ids
+    this.poll_id = obj?.poll_id;
+    this.user = obj?.user && new User(obj.user);
+    this.option_ids = obj?.option_ids;
   }
  
 }

@@ -9,7 +9,7 @@ export default class KeyboardButtonPollType {
   readonly type?: string;
 
   constructor(obj: { type?: string,  } ) {
-    this.type = obj?.type
+    this.type = obj?.type;
   }
  
 }

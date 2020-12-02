@@ -55,16 +55,16 @@ export default class EncryptedPassportElement {
   readonly hash: string;
 
   constructor(obj: { type: string, hash: string, data?: string, phone_number?: string, email?: string, files?: PassportFile[], front_side?: PassportFile, reverse_side?: PassportFile, selfie?: PassportFile, translation?: PassportFile[],  } ) {
-    this.type = obj?.type
-    this.data = obj?.data
-    this.phone_number = obj?.phone_number
-    this.email = obj?.email
-    this.files = obj?.files?.map(o=>new PassportFile(o))
-    this.front_side = obj?.front_side && new PassportFile(obj.front_side)
-    this.reverse_side = obj?.reverse_side && new PassportFile(obj.reverse_side)
-    this.selfie = obj?.selfie && new PassportFile(obj.selfie)
-    this.translation = obj?.translation?.map(o=>new PassportFile(o))
-    this.hash = obj?.hash
+    this.type = obj?.type;
+    this.data = obj?.data;
+    this.phone_number = obj?.phone_number;
+    this.email = obj?.email;
+    this.files = obj?.files?.map(o=>new PassportFile(o));
+    this.front_side = obj?.front_side && new PassportFile(obj.front_side);
+    this.reverse_side = obj?.reverse_side && new PassportFile(obj.reverse_side);
+    this.selfie = obj?.selfie && new PassportFile(obj.selfie);
+    this.translation = obj?.translation?.map(o=>new PassportFile(o));
+    this.hash = obj?.hash;
   }
  
 }

@@ -84,21 +84,21 @@ export default class InlineQueryResultVenue {
   readonly thumb_height?: number;
 
   constructor(obj: { type: string, id: string, latitude: number, longitude: number, title: string, address: string, foursquare_id?: string, foursquare_type?: string, google_place_id?: string, google_place_type?: string, reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent), thumb_url?: string, thumb_width?: number, thumb_height?: number,  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.latitude = obj?.latitude
-    this.longitude = obj?.longitude
-    this.title = obj?.title
-    this.address = obj?.address
-    this.foursquare_id = obj?.foursquare_id
-    this.foursquare_type = obj?.foursquare_type
-    this.google_place_id = obj?.google_place_id
-    this.google_place_type = obj?.google_place_type
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
-    this.thumb_url = obj?.thumb_url
-    this.thumb_width = obj?.thumb_width
-    this.thumb_height = obj?.thumb_height
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.latitude = obj?.latitude;
+    this.longitude = obj?.longitude;
+    this.title = obj?.title;
+    this.address = obj?.address;
+    this.foursquare_id = obj?.foursquare_id;
+    this.foursquare_type = obj?.foursquare_type;
+    this.google_place_id = obj?.google_place_id;
+    this.google_place_type = obj?.google_place_type;
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
+    this.thumb_url = obj?.thumb_url;
+    this.thumb_width = obj?.thumb_width;
+    this.thumb_height = obj?.thumb_height;
   }
  
 }

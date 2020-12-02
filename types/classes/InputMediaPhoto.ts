@@ -30,11 +30,11 @@ export default class InputMediaPhoto {
   readonly caption_entities?: MessageEntity[];
 
   constructor(obj: { type: string, media: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[],  } ) {
-    this.type = obj?.type
-    this.media = obj?.media
-    this.caption = obj?.caption
-    this.parse_mode = obj?.parse_mode
-    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
+    this.type = obj?.type;
+    this.media = obj?.media;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o));
   }
  
 }

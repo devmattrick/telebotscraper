@@ -14,8 +14,8 @@ export default class ReplyKeyboardRemove {
   readonly selective?: boolean;
 
   constructor(obj: { remove_keyboard: true, selective?: boolean,  } ) {
-    this.remove_keyboard = obj?.remove_keyboard
-    this.selective = obj?.selective
+    this.remove_keyboard = obj?.remove_keyboard;
+    this.selective = obj?.selective;
   }
  
 }

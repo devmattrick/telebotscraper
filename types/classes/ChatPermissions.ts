@@ -44,14 +44,14 @@ export default class ChatPermissions {
   readonly can_pin_messages?: boolean;
 
   constructor(obj: { can_send_messages?: boolean, can_send_media_messages?: boolean, can_send_polls?: boolean, can_send_other_messages?: boolean, can_add_web_page_previews?: boolean, can_change_info?: boolean, can_invite_users?: boolean, can_pin_messages?: boolean,  } ) {
-    this.can_send_messages = obj?.can_send_messages
-    this.can_send_media_messages = obj?.can_send_media_messages
-    this.can_send_polls = obj?.can_send_polls
-    this.can_send_other_messages = obj?.can_send_other_messages
-    this.can_add_web_page_previews = obj?.can_add_web_page_previews
-    this.can_change_info = obj?.can_change_info
-    this.can_invite_users = obj?.can_invite_users
-    this.can_pin_messages = obj?.can_pin_messages
+    this.can_send_messages = obj?.can_send_messages;
+    this.can_send_media_messages = obj?.can_send_media_messages;
+    this.can_send_polls = obj?.can_send_polls;
+    this.can_send_other_messages = obj?.can_send_other_messages;
+    this.can_add_web_page_previews = obj?.can_add_web_page_previews;
+    this.can_change_info = obj?.can_change_info;
+    this.can_invite_users = obj?.can_invite_users;
+    this.can_pin_messages = obj?.can_pin_messages;
   }
  
 }

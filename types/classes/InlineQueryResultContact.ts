@@ -64,17 +64,17 @@ export default class InlineQueryResultContact {
   readonly thumb_height?: number;
 
   constructor(obj: { type: string, id: string, phone_number: string, first_name: string, last_name?: string, vcard?: string, reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent), thumb_url?: string, thumb_width?: number, thumb_height?: number,  } ) {
-    this.type = obj?.type
-    this.id = obj?.id
-    this.phone_number = obj?.phone_number
-    this.first_name = obj?.first_name
-    this.last_name = obj?.last_name
-    this.vcard = obj?.vcard
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
-    this.thumb_url = obj?.thumb_url
-    this.thumb_width = obj?.thumb_width
-    this.thumb_height = obj?.thumb_height
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.phone_number = obj?.phone_number;
+    this.first_name = obj?.first_name;
+    this.last_name = obj?.last_name;
+    this.vcard = obj?.vcard;
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
+    this.thumb_url = obj?.thumb_url;
+    this.thumb_width = obj?.thumb_width;
+    this.thumb_height = obj?.thumb_height;
   }
  
 }

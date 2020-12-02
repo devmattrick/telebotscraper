@@ -29,11 +29,11 @@ export default class Invoice {
   readonly total_amount: number;
 
   constructor(obj: { title: string, description: string, start_parameter: string, currency: string, total_amount: number,  } ) {
-    this.title = obj?.title
-    this.description = obj?.description
-    this.start_parameter = obj?.start_parameter
-    this.currency = obj?.currency
-    this.total_amount = obj?.total_amount
+    this.title = obj?.title;
+    this.description = obj?.description;
+    this.start_parameter = obj?.start_parameter;
+    this.currency = obj?.currency;
+    this.total_amount = obj?.total_amount;
   }
  
 }

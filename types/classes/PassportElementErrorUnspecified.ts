@@ -24,10 +24,10 @@ export default class PassportElementErrorUnspecified {
   readonly message: string;
 
   constructor(obj: { source: string, type: string, element_hash: string, message: string,  } ) {
-    this.source = obj?.source
-    this.type = obj?.type
-    this.element_hash = obj?.element_hash
-    this.message = obj?.message
+    this.source = obj?.source;
+    this.type = obj?.type;
+    this.element_hash = obj?.element_hash;
+    this.message = obj?.message;
   }
  
 }
