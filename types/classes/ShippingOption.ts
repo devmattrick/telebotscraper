@@ -20,9 +20,9 @@ export default class ShippingOption {
   readonly prices: LabeledPrice[];
 
   constructor(obj: { id: string, title: string, prices: LabeledPrice[],  } ) {
-    this.id = obj?.id;
-    this.title = obj?.title;
-    this.prices = obj?.prices && new LabeledPrice[](obj.prices);
+    this.id = obj?.id
+    this.title = obj?.title
+    this.prices = obj?.prices?.map(o=>new LabeledPrice(o))
   }
  
 }

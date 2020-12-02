@@ -14,8 +14,8 @@ export default class PollOption {
   readonly voter_count: number;
 
   constructor(obj: { text: string, voter_count: number,  } ) {
-    this.text = obj?.text;
-    this.voter_count = obj?.voter_count;
+    this.text = obj?.text
+    this.voter_count = obj?.voter_count
   }
  
 }

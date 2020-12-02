@@ -24,10 +24,10 @@ export default class PassportFile {
   readonly file_date: number;
 
   constructor(obj: { file_id: string, file_unique_id: string, file_size: number, file_date: number,  } ) {
-    this.file_id = obj?.file_id;
-    this.file_unique_id = obj?.file_unique_id;
-    this.file_size = obj?.file_size;
-    this.file_date = obj?.file_date;
+    this.file_id = obj?.file_id
+    this.file_unique_id = obj?.file_unique_id
+    this.file_size = obj?.file_size
+    this.file_date = obj?.file_date
   }
  
 }

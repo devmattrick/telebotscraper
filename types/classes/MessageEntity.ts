@@ -35,12 +35,12 @@ export default class MessageEntity {
   readonly language?: string;
 
   constructor(obj: { type: string, offset: number, length: number, url?: string, user?: User, language?: string,  } ) {
-    this.type = obj?.type;
-    this.offset = obj?.offset;
-    this.length = obj?.length;
-    this.url = obj?.url;
-    this.user = obj?.user && new User(obj.user);
-    this.language = obj?.language;
+    this.type = obj?.type
+    this.offset = obj?.offset
+    this.length = obj?.length
+    this.url = obj?.url
+    this.user = obj?.user && new User(obj.user)
+    this.language = obj?.language
   }
  
 }

@@ -10,9 +10,19 @@ Handlebars.registerHelper('eq', function (s1, s2) {
   return s1 === s2;
 });
 
-Handlebars.registerHelper('isCapital', function (object) {
-  const l = String(object).charAt(0);
-  const out = (l === l.toUpperCase());
+Handlebars.registerHelper('getDeclaration', function (name, type) {
+  const l = String(type).charAt(0);
+  const capital = (l === l.toUpperCase());
+  if (capital) {
+    const isArr = type.indexOf("[]") >= 0;
+    if (isArr) {
+      return `this.${name} = obj?.${name}?.map(o=>new ${type.replace("[]","")}(o))`;
+    } else {
+      return `this.${name} = obj?.${name} && new ${type}(obj.${name})`;
+    }
+  } else {
+    return `this.${name} = obj?.${name}`;
+  }
   return out;
 });
 

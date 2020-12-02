@@ -34,12 +34,12 @@ export default class Location {
   readonly proximity_alert_radius?: number;
 
   constructor(obj: { longitude: number, latitude: number, horizontal_accuracy?: number, live_period?: number, heading?: number, proximity_alert_radius?: number,  } ) {
-    this.longitude = obj?.longitude;
-    this.latitude = obj?.latitude;
-    this.horizontal_accuracy = obj?.horizontal_accuracy;
-    this.live_period = obj?.live_period;
-    this.heading = obj?.heading;
-    this.proximity_alert_radius = obj?.proximity_alert_radius;
+    this.longitude = obj?.longitude
+    this.latitude = obj?.latitude
+    this.horizontal_accuracy = obj?.horizontal_accuracy
+    this.live_period = obj?.live_period
+    this.heading = obj?.heading
+    this.proximity_alert_radius = obj?.proximity_alert_radius
   }
  
 }

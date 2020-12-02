@@ -24,10 +24,10 @@ export default class MaskPosition {
   readonly scale: number;
 
   constructor(obj: { point: string, x_shift: number, y_shift: number, scale: number,  } ) {
-    this.point = obj?.point;
-    this.x_shift = obj?.x_shift;
-    this.y_shift = obj?.y_shift;
-    this.scale = obj?.scale;
+    this.point = obj?.point
+    this.x_shift = obj?.x_shift
+    this.y_shift = obj?.y_shift
+    this.scale = obj?.scale
   }
  
 }

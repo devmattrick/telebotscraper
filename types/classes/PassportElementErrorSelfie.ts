@@ -24,10 +24,10 @@ export default class PassportElementErrorSelfie {
   readonly message: string;
 
   constructor(obj: { source: string, type: string, file_hash: string, message: string,  } ) {
-    this.source = obj?.source;
-    this.type = obj?.type;
-    this.file_hash = obj?.file_hash;
-    this.message = obj?.message;
+    this.source = obj?.source
+    this.type = obj?.type
+    this.file_hash = obj?.file_hash
+    this.message = obj?.message
   }
  
 }

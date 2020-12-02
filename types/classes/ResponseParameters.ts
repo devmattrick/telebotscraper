@@ -14,8 +14,8 @@ export default class ResponseParameters {
   readonly retry_after?: number;
 
   constructor(obj: { migrate_to_chat_id?: number, retry_after?: number,  } ) {
-    this.migrate_to_chat_id = obj?.migrate_to_chat_id;
-    this.retry_after = obj?.retry_after;
+    this.migrate_to_chat_id = obj?.migrate_to_chat_id
+    this.retry_after = obj?.retry_after
   }
  
 }

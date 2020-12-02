@@ -44,14 +44,14 @@ export default class WebhookInfo {
   readonly allowed_updates?: string[];
 
   constructor(obj: { url: string, has_custom_certificate: boolean, pending_update_count: number, ip_address?: string, last_error_date?: number, last_error_message?: string, max_connections?: number, allowed_updates?: string[],  } ) {
-    this.url = obj?.url;
-    this.has_custom_certificate = obj?.has_custom_certificate;
-    this.pending_update_count = obj?.pending_update_count;
-    this.ip_address = obj?.ip_address;
-    this.last_error_date = obj?.last_error_date;
-    this.last_error_message = obj?.last_error_message;
-    this.max_connections = obj?.max_connections;
-    this.allowed_updates = obj?.allowed_updates;
+    this.url = obj?.url
+    this.has_custom_certificate = obj?.has_custom_certificate
+    this.pending_update_count = obj?.pending_update_count
+    this.ip_address = obj?.ip_address
+    this.last_error_date = obj?.last_error_date
+    this.last_error_message = obj?.last_error_message
+    this.max_connections = obj?.max_connections
+    this.allowed_updates = obj?.allowed_updates
   }
  
 }

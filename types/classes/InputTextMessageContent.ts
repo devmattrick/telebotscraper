@@ -25,10 +25,10 @@ export default class InputTextMessageContent {
   readonly disable_web_page_preview?: boolean;
 
   constructor(obj: { message_text: string, parse_mode?: string, entities?: MessageEntity[], disable_web_page_preview?: boolean,  } ) {
-    this.message_text = obj?.message_text;
-    this.parse_mode = obj?.parse_mode;
-    this.entities = obj?.entities && new MessageEntity[](obj.entities);
-    this.disable_web_page_preview = obj?.disable_web_page_preview;
+    this.message_text = obj?.message_text
+    this.parse_mode = obj?.parse_mode
+    this.entities = obj?.entities?.map(o=>new MessageEntity(o))
+    this.disable_web_page_preview = obj?.disable_web_page_preview
   }
  
 }

@@ -50,15 +50,15 @@ export default class Audio {
   readonly thumb?: PhotoSize;
 
   constructor(obj: { file_id: string, file_unique_id: string, duration: number, performer?: string, title?: string, file_name?: string, mime_type?: string, file_size?: number, thumb?: PhotoSize,  } ) {
-    this.file_id = obj?.file_id;
-    this.file_unique_id = obj?.file_unique_id;
-    this.duration = obj?.duration;
-    this.performer = obj?.performer;
-    this.title = obj?.title;
-    this.file_name = obj?.file_name;
-    this.mime_type = obj?.mime_type;
-    this.file_size = obj?.file_size;
-    this.thumb = obj?.thumb && new PhotoSize(obj.thumb);
+    this.file_id = obj?.file_id
+    this.file_unique_id = obj?.file_unique_id
+    this.duration = obj?.duration
+    this.performer = obj?.performer
+    this.title = obj?.title
+    this.file_name = obj?.file_name
+    this.mime_type = obj?.mime_type
+    this.file_size = obj?.file_size
+    this.thumb = obj?.thumb && new PhotoSize(obj.thumb)
   }
  
 }

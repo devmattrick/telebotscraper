@@ -24,10 +24,10 @@ export default class ChatPhoto {
   readonly big_file_unique_id: string;
 
   constructor(obj: { small_file_id: string, small_file_unique_id: string, big_file_id: string, big_file_unique_id: string,  } ) {
-    this.small_file_id = obj?.small_file_id;
-    this.small_file_unique_id = obj?.small_file_unique_id;
-    this.big_file_id = obj?.big_file_id;
-    this.big_file_unique_id = obj?.big_file_unique_id;
+    this.small_file_id = obj?.small_file_id
+    this.small_file_unique_id = obj?.small_file_unique_id
+    this.big_file_id = obj?.big_file_id
+    this.big_file_unique_id = obj?.big_file_unique_id
   }
  
 }

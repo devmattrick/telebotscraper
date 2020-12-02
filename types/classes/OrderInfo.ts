@@ -25,10 +25,10 @@ export default class OrderInfo {
   readonly shipping_address?: ShippingAddress;
 
   constructor(obj: { name?: string, phone_number?: string, email?: string, shipping_address?: ShippingAddress,  } ) {
-    this.name = obj?.name;
-    this.phone_number = obj?.phone_number;
-    this.email = obj?.email;
-    this.shipping_address = obj?.shipping_address && new ShippingAddress(obj.shipping_address);
+    this.name = obj?.name
+    this.phone_number = obj?.phone_number
+    this.email = obj?.email
+    this.shipping_address = obj?.shipping_address && new ShippingAddress(obj.shipping_address)
   }
  
 }

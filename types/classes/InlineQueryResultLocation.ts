@@ -79,20 +79,20 @@ export default class InlineQueryResultLocation {
   readonly thumb_height?: number;
 
   constructor(obj: { type: string, id: string, latitude: number, longitude: number, title: string, horizontal_accuracy?: number, live_period?: number, heading?: number, proximity_alert_radius?: number, reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent), thumb_url?: string, thumb_width?: number, thumb_height?: number,  } ) {
-    this.type = obj?.type;
-    this.id = obj?.id;
-    this.latitude = obj?.latitude;
-    this.longitude = obj?.longitude;
-    this.title = obj?.title;
-    this.horizontal_accuracy = obj?.horizontal_accuracy;
-    this.live_period = obj?.live_period;
-    this.heading = obj?.heading;
-    this.proximity_alert_radius = obj?.proximity_alert_radius;
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
-    this.thumb_url = obj?.thumb_url;
-    this.thumb_width = obj?.thumb_width;
-    this.thumb_height = obj?.thumb_height;
+    this.type = obj?.type
+    this.id = obj?.id
+    this.latitude = obj?.latitude
+    this.longitude = obj?.longitude
+    this.title = obj?.title
+    this.horizontal_accuracy = obj?.horizontal_accuracy
+    this.live_period = obj?.live_period
+    this.heading = obj?.heading
+    this.proximity_alert_radius = obj?.proximity_alert_radius
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
+    this.thumb_url = obj?.thumb_url
+    this.thumb_width = obj?.thumb_width
+    this.thumb_height = obj?.thumb_height
   }
  
 }

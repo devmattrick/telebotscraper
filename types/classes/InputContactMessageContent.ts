@@ -24,10 +24,10 @@ export default class InputContactMessageContent {
   readonly vcard?: string;
 
   constructor(obj: { phone_number: string, first_name: string, last_name?: string, vcard?: string,  } ) {
-    this.phone_number = obj?.phone_number;
-    this.first_name = obj?.first_name;
-    this.last_name = obj?.last_name;
-    this.vcard = obj?.vcard;
+    this.phone_number = obj?.phone_number
+    this.first_name = obj?.first_name
+    this.last_name = obj?.last_name
+    this.vcard = obj?.vcard
   }
  
 }

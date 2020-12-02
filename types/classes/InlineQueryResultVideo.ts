@@ -88,21 +88,21 @@ export default class InlineQueryResultVideo {
   readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, video_url: string, mime_type: string, thumb_url: string, title: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], video_width?: number, video_height?: number, video_duration?: number, description?: string, reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj?.type;
-    this.id = obj?.id;
-    this.video_url = obj?.video_url;
-    this.mime_type = obj?.mime_type;
-    this.thumb_url = obj?.thumb_url;
-    this.title = obj?.title;
-    this.caption = obj?.caption;
-    this.parse_mode = obj?.parse_mode;
-    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
-    this.video_width = obj?.video_width;
-    this.video_height = obj?.video_height;
-    this.video_duration = obj?.video_duration;
-    this.description = obj?.description;
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
+    this.type = obj?.type
+    this.id = obj?.id
+    this.video_url = obj?.video_url
+    this.mime_type = obj?.mime_type
+    this.thumb_url = obj?.thumb_url
+    this.title = obj?.title
+    this.caption = obj?.caption
+    this.parse_mode = obj?.parse_mode
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
+    this.video_width = obj?.video_width
+    this.video_height = obj?.video_height
+    this.video_duration = obj?.video_duration
+    this.description = obj?.description
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
   }
  
 }

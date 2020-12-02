@@ -41,13 +41,13 @@ export default class InputMediaDocument {
   readonly disable_content_type_detection?: boolean;
 
   constructor(obj: { type: string, media: string, thumb?: InputFile | string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], disable_content_type_detection?: boolean,  } ) {
-    this.type = obj?.type;
-    this.media = obj?.media;
-    this.thumb = obj?.thumb && new InputFile | string(obj.thumb);
-    this.caption = obj?.caption;
-    this.parse_mode = obj?.parse_mode;
-    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
-    this.disable_content_type_detection = obj?.disable_content_type_detection;
+    this.type = obj?.type
+    this.media = obj?.media
+    this.thumb = obj?.thumb && new InputFile | string(obj.thumb)
+    this.caption = obj?.caption
+    this.parse_mode = obj?.parse_mode
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
+    this.disable_content_type_detection = obj?.disable_content_type_detection
   }
  
 }

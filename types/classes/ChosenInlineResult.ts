@@ -31,11 +31,11 @@ export default class ChosenInlineResult {
   readonly query: string;
 
   constructor(obj: { result_id: string, from: User, query: string, location?: Location, inline_message_id?: string,  } ) {
-    this.result_id = obj?.result_id;
-    this.from = obj?.from && new User(obj.from);
-    this.location = obj?.location && new Location(obj.location);
-    this.inline_message_id = obj?.inline_message_id;
-    this.query = obj?.query;
+    this.result_id = obj?.result_id
+    this.from = obj?.from && new User(obj.from)
+    this.location = obj?.location && new Location(obj.location)
+    this.inline_message_id = obj?.inline_message_id
+    this.query = obj?.query
   }
  
 }

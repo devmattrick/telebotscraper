@@ -64,17 +64,17 @@ export default class InlineQueryResultArticle {
   readonly thumb_height?: number;
 
   constructor(obj: { type: string, id: string, title: string, input_message_content: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent), reply_markup?: InlineKeyboardMarkup, url?: string, hide_url?: boolean, description?: string, thumb_url?: string, thumb_width?: number, thumb_height?: number,  } ) {
-    this.type = obj?.type;
-    this.id = obj?.id;
-    this.title = obj?.title;
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
-    this.url = obj?.url;
-    this.hide_url = obj?.hide_url;
-    this.description = obj?.description;
-    this.thumb_url = obj?.thumb_url;
-    this.thumb_width = obj?.thumb_width;
-    this.thumb_height = obj?.thumb_height;
+    this.type = obj?.type
+    this.id = obj?.id
+    this.title = obj?.title
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
+    this.url = obj?.url
+    this.hide_url = obj?.hide_url
+    this.description = obj?.description
+    this.thumb_url = obj?.thumb_url
+    this.thumb_width = obj?.thumb_width
+    this.thumb_height = obj?.thumb_height
   }
  
 }

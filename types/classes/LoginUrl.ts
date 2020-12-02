@@ -31,10 +31,10 @@ export default class LoginUrl {
   readonly request_write_access?: boolean;
 
   constructor(obj: { url: string, forward_text?: string, bot_username?: string, request_write_access?: boolean,  } ) {
-    this.url = obj?.url;
-    this.forward_text = obj?.forward_text;
-    this.bot_username = obj?.bot_username;
-    this.request_write_access = obj?.request_write_access;
+    this.url = obj?.url
+    this.forward_text = obj?.forward_text
+    this.bot_username = obj?.bot_username
+    this.request_write_access = obj?.request_write_access
   }
  
 }

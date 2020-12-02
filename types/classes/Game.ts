@@ -37,12 +37,12 @@ export default class Game {
   readonly animation?: Animation;
 
   constructor(obj: { title: string, description: string, photo: PhotoSize[], text?: string, text_entities?: MessageEntity[], animation?: Animation,  } ) {
-    this.title = obj?.title;
-    this.description = obj?.description;
-    this.photo = obj?.photo && new PhotoSize[](obj.photo);
-    this.text = obj?.text;
-    this.text_entities = obj?.text_entities && new MessageEntity[](obj.text_entities);
-    this.animation = obj?.animation && new Animation(obj.animation);
+    this.title = obj?.title
+    this.description = obj?.description
+    this.photo = obj?.photo?.map(o=>new PhotoSize(o))
+    this.text = obj?.text
+    this.text_entities = obj?.text_entities?.map(o=>new MessageEntity(o))
+    this.animation = obj?.animation && new Animation(obj.animation)
   }
  
 }

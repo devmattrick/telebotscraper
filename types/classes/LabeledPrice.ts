@@ -14,8 +14,8 @@ export default class LabeledPrice {
   readonly amount: number;
 
   constructor(obj: { label: string, amount: number,  } ) {
-    this.label = obj?.label;
-    this.amount = obj?.amount;
+    this.label = obj?.label
+    this.amount = obj?.amount
   }
  
 }

@@ -29,11 +29,11 @@ export default class Voice {
   readonly file_size?: number;
 
   constructor(obj: { file_id: string, file_unique_id: string, duration: number, mime_type?: string, file_size?: number,  } ) {
-    this.file_id = obj?.file_id;
-    this.file_unique_id = obj?.file_unique_id;
-    this.duration = obj?.duration;
-    this.mime_type = obj?.mime_type;
-    this.file_size = obj?.file_size;
+    this.file_id = obj?.file_id
+    this.file_unique_id = obj?.file_unique_id
+    this.duration = obj?.duration
+    this.mime_type = obj?.mime_type
+    this.file_size = obj?.file_size
   }
  
 }

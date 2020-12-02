@@ -34,12 +34,12 @@ export default class ShippingAddress {
   readonly post_code: string;
 
   constructor(obj: { country_code: string, state: string, city: string, street_line1: string, street_line2: string, post_code: string,  } ) {
-    this.country_code = obj?.country_code;
-    this.state = obj?.state;
-    this.city = obj?.city;
-    this.street_line1 = obj?.street_line1;
-    this.street_line2 = obj?.street_line2;
-    this.post_code = obj?.post_code;
+    this.country_code = obj?.country_code
+    this.state = obj?.state
+    this.city = obj?.city
+    this.street_line1 = obj?.street_line1
+    this.street_line2 = obj?.street_line2
+    this.post_code = obj?.post_code
   }
  
 }

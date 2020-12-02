@@ -282,57 +282,57 @@ export default class Message {
   readonly reply_markup?: InlineKeyboardMarkup;
 
   constructor(obj: { message_id: number, date: number, chat: Chat, from?: User, sender_chat?: Chat, forward_from?: User, forward_from_chat?: Chat, forward_from_message_id?: number, forward_signature?: string, forward_sender_name?: string, forward_date?: number, reply_to_message?: Message, via_bot?: User, edit_date?: number, media_group_id?: string, author_signature?: string, text?: string, entities?: MessageEntity[], animation?: Animation, audio?: Audio, document?: Document, photo?: PhotoSize[], sticker?: Sticker, video?: Video, video_note?: VideoNote, voice?: Voice, caption?: string, caption_entities?: MessageEntity[], contact?: Contact, dice?: Dice, game?: Game, poll?: Poll, venue?: Venue, location?: Location, new_chat_members?: User[], left_chat_member?: User, new_chat_title?: string, new_chat_photo?: PhotoSize[], delete_chat_photo?: true, group_chat_created?: true, supergroup_chat_created?: true, channel_chat_created?: true, migrate_to_chat_id?: number, migrate_from_chat_id?: number, pinned_message?: Message, invoice?: Invoice, successful_payment?: SuccessfulPayment, connected_website?: string, passport_data?: PassportData, proximity_alert_triggered?: ProximityAlertTriggered, reply_markup?: InlineKeyboardMarkup,  } ) {
-    this.message_id = obj?.message_id;
-    this.from = obj?.from && new User(obj.from);
-    this.sender_chat = obj?.sender_chat && new Chat(obj.sender_chat);
-    this.date = obj?.date;
-    this.chat = obj?.chat && new Chat(obj.chat);
-    this.forward_from = obj?.forward_from && new User(obj.forward_from);
-    this.forward_from_chat = obj?.forward_from_chat && new Chat(obj.forward_from_chat);
-    this.forward_from_message_id = obj?.forward_from_message_id;
-    this.forward_signature = obj?.forward_signature;
-    this.forward_sender_name = obj?.forward_sender_name;
-    this.forward_date = obj?.forward_date;
-    this.reply_to_message = obj?.reply_to_message && new Message(obj.reply_to_message);
-    this.via_bot = obj?.via_bot && new User(obj.via_bot);
-    this.edit_date = obj?.edit_date;
-    this.media_group_id = obj?.media_group_id;
-    this.author_signature = obj?.author_signature;
-    this.text = obj?.text;
-    this.entities = obj?.entities && new MessageEntity[](obj.entities);
-    this.animation = obj?.animation && new Animation(obj.animation);
-    this.audio = obj?.audio && new Audio(obj.audio);
-    this.document = obj?.document && new Document(obj.document);
-    this.photo = obj?.photo && new PhotoSize[](obj.photo);
-    this.sticker = obj?.sticker && new Sticker(obj.sticker);
-    this.video = obj?.video && new Video(obj.video);
-    this.video_note = obj?.video_note && new VideoNote(obj.video_note);
-    this.voice = obj?.voice && new Voice(obj.voice);
-    this.caption = obj?.caption;
-    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
-    this.contact = obj?.contact && new Contact(obj.contact);
-    this.dice = obj?.dice && new Dice(obj.dice);
-    this.game = obj?.game && new Game(obj.game);
-    this.poll = obj?.poll && new Poll(obj.poll);
-    this.venue = obj?.venue && new Venue(obj.venue);
-    this.location = obj?.location && new Location(obj.location);
-    this.new_chat_members = obj?.new_chat_members && new User[](obj.new_chat_members);
-    this.left_chat_member = obj?.left_chat_member && new User(obj.left_chat_member);
-    this.new_chat_title = obj?.new_chat_title;
-    this.new_chat_photo = obj?.new_chat_photo && new PhotoSize[](obj.new_chat_photo);
-    this.delete_chat_photo = obj?.delete_chat_photo;
-    this.group_chat_created = obj?.group_chat_created;
-    this.supergroup_chat_created = obj?.supergroup_chat_created;
-    this.channel_chat_created = obj?.channel_chat_created;
-    this.migrate_to_chat_id = obj?.migrate_to_chat_id;
-    this.migrate_from_chat_id = obj?.migrate_from_chat_id;
-    this.pinned_message = obj?.pinned_message && new Message(obj.pinned_message);
-    this.invoice = obj?.invoice && new Invoice(obj.invoice);
-    this.successful_payment = obj?.successful_payment && new SuccessfulPayment(obj.successful_payment);
-    this.connected_website = obj?.connected_website;
-    this.passport_data = obj?.passport_data && new PassportData(obj.passport_data);
-    this.proximity_alert_triggered = obj?.proximity_alert_triggered && new ProximityAlertTriggered(obj.proximity_alert_triggered);
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.message_id = obj?.message_id
+    this.from = obj?.from && new User(obj.from)
+    this.sender_chat = obj?.sender_chat && new Chat(obj.sender_chat)
+    this.date = obj?.date
+    this.chat = obj?.chat && new Chat(obj.chat)
+    this.forward_from = obj?.forward_from && new User(obj.forward_from)
+    this.forward_from_chat = obj?.forward_from_chat && new Chat(obj.forward_from_chat)
+    this.forward_from_message_id = obj?.forward_from_message_id
+    this.forward_signature = obj?.forward_signature
+    this.forward_sender_name = obj?.forward_sender_name
+    this.forward_date = obj?.forward_date
+    this.reply_to_message = obj?.reply_to_message && new Message(obj.reply_to_message)
+    this.via_bot = obj?.via_bot && new User(obj.via_bot)
+    this.edit_date = obj?.edit_date
+    this.media_group_id = obj?.media_group_id
+    this.author_signature = obj?.author_signature
+    this.text = obj?.text
+    this.entities = obj?.entities?.map(o=>new MessageEntity(o))
+    this.animation = obj?.animation && new Animation(obj.animation)
+    this.audio = obj?.audio && new Audio(obj.audio)
+    this.document = obj?.document && new Document(obj.document)
+    this.photo = obj?.photo?.map(o=>new PhotoSize(o))
+    this.sticker = obj?.sticker && new Sticker(obj.sticker)
+    this.video = obj?.video && new Video(obj.video)
+    this.video_note = obj?.video_note && new VideoNote(obj.video_note)
+    this.voice = obj?.voice && new Voice(obj.voice)
+    this.caption = obj?.caption
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
+    this.contact = obj?.contact && new Contact(obj.contact)
+    this.dice = obj?.dice && new Dice(obj.dice)
+    this.game = obj?.game && new Game(obj.game)
+    this.poll = obj?.poll && new Poll(obj.poll)
+    this.venue = obj?.venue && new Venue(obj.venue)
+    this.location = obj?.location && new Location(obj.location)
+    this.new_chat_members = obj?.new_chat_members?.map(o=>new User(o))
+    this.left_chat_member = obj?.left_chat_member && new User(obj.left_chat_member)
+    this.new_chat_title = obj?.new_chat_title
+    this.new_chat_photo = obj?.new_chat_photo?.map(o=>new PhotoSize(o))
+    this.delete_chat_photo = obj?.delete_chat_photo
+    this.group_chat_created = obj?.group_chat_created
+    this.supergroup_chat_created = obj?.supergroup_chat_created
+    this.channel_chat_created = obj?.channel_chat_created
+    this.migrate_to_chat_id = obj?.migrate_to_chat_id
+    this.migrate_from_chat_id = obj?.migrate_from_chat_id
+    this.pinned_message = obj?.pinned_message && new Message(obj.pinned_message)
+    this.invoice = obj?.invoice && new Invoice(obj.invoice)
+    this.successful_payment = obj?.successful_payment && new SuccessfulPayment(obj.successful_payment)
+    this.connected_website = obj?.connected_website
+    this.passport_data = obj?.passport_data && new PassportData(obj.passport_data)
+    this.proximity_alert_triggered = obj?.proximity_alert_triggered && new ProximityAlertTriggered(obj.proximity_alert_triggered)
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
   }
  
 }

@@ -15,8 +15,8 @@ export default class ChatLocation {
   readonly address: string;
 
   constructor(obj: { location: Location, address: string,  } ) {
-    this.location = obj?.location && new Location(obj.location);
-    this.address = obj?.address;
+    this.location = obj?.location && new Location(obj.location)
+    this.address = obj?.address
   }
  
 }

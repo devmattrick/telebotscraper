@@ -46,14 +46,14 @@ export default class InlineKeyboardButton {
   readonly pay?: boolean;
 
   constructor(obj: { text: string, url?: string, login_url?: LoginUrl, callback_data?: string, switch_inline_query?: string, switch_inline_query_current_chat?: string, callback_game?: CallbackGame, pay?: boolean,  } ) {
-    this.text = obj?.text;
-    this.url = obj?.url;
-    this.login_url = obj?.login_url && new LoginUrl(obj.login_url);
-    this.callback_data = obj?.callback_data;
-    this.switch_inline_query = obj?.switch_inline_query;
-    this.switch_inline_query_current_chat = obj?.switch_inline_query_current_chat;
-    this.callback_game = obj?.callback_game && new CallbackGame(obj.callback_game);
-    this.pay = obj?.pay;
+    this.text = obj?.text
+    this.url = obj?.url
+    this.login_url = obj?.login_url && new LoginUrl(obj.login_url)
+    this.callback_data = obj?.callback_data
+    this.switch_inline_query = obj?.switch_inline_query
+    this.switch_inline_query_current_chat = obj?.switch_inline_query_current_chat
+    this.callback_game = obj?.callback_game && new CallbackGame(obj.callback_game)
+    this.pay = obj?.pay
   }
  
 }

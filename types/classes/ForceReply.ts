@@ -14,8 +14,8 @@ export default class ForceReply {
   readonly selective?: boolean;
 
   constructor(obj: { force_reply: true, selective?: boolean,  } ) {
-    this.force_reply = obj?.force_reply;
-    this.selective = obj?.selective;
+    this.force_reply = obj?.force_reply
+    this.selective = obj?.selective
   }
  
 }

@@ -60,16 +60,16 @@ export default class InlineQueryResultCachedPhoto {
   readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, photo_file_id: string, title?: string, description?: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj?.type;
-    this.id = obj?.id;
-    this.photo_file_id = obj?.photo_file_id;
-    this.title = obj?.title;
-    this.description = obj?.description;
-    this.caption = obj?.caption;
-    this.parse_mode = obj?.parse_mode;
-    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
-    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
-    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
+    this.type = obj?.type
+    this.id = obj?.id
+    this.photo_file_id = obj?.photo_file_id
+    this.title = obj?.title
+    this.description = obj?.description
+    this.caption = obj?.caption
+    this.parse_mode = obj?.parse_mode
+    this.caption_entities = obj?.caption_entities?.map(o=>new MessageEntity(o))
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup)
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content)
   }
  
 }

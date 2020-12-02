@@ -105,26 +105,26 @@ export default class ChatMember {
   readonly until_date?: number;
 
   constructor(obj: { user: User, status: string, custom_title?: string, is_anonymous?: boolean, can_be_edited?: boolean, can_post_messages?: boolean, can_edit_messages?: boolean, can_delete_messages?: boolean, can_restrict_members?: boolean, can_promote_members?: boolean, can_change_info?: boolean, can_invite_users?: boolean, can_pin_messages?: boolean, is_member?: boolean, can_send_messages?: boolean, can_send_media_messages?: boolean, can_send_polls?: boolean, can_send_other_messages?: boolean, can_add_web_page_previews?: boolean, until_date?: number,  } ) {
-    this.user = obj?.user && new User(obj.user);
-    this.status = obj?.status;
-    this.custom_title = obj?.custom_title;
-    this.is_anonymous = obj?.is_anonymous;
-    this.can_be_edited = obj?.can_be_edited;
-    this.can_post_messages = obj?.can_post_messages;
-    this.can_edit_messages = obj?.can_edit_messages;
-    this.can_delete_messages = obj?.can_delete_messages;
-    this.can_restrict_members = obj?.can_restrict_members;
-    this.can_promote_members = obj?.can_promote_members;
-    this.can_change_info = obj?.can_change_info;
-    this.can_invite_users = obj?.can_invite_users;
-    this.can_pin_messages = obj?.can_pin_messages;
-    this.is_member = obj?.is_member;
-    this.can_send_messages = obj?.can_send_messages;
-    this.can_send_media_messages = obj?.can_send_media_messages;
-    this.can_send_polls = obj?.can_send_polls;
-    this.can_send_other_messages = obj?.can_send_other_messages;
-    this.can_add_web_page_previews = obj?.can_add_web_page_previews;
-    this.until_date = obj?.until_date;
+    this.user = obj?.user && new User(obj.user)
+    this.status = obj?.status
+    this.custom_title = obj?.custom_title
+    this.is_anonymous = obj?.is_anonymous
+    this.can_be_edited = obj?.can_be_edited
+    this.can_post_messages = obj?.can_post_messages
+    this.can_edit_messages = obj?.can_edit_messages
+    this.can_delete_messages = obj?.can_delete_messages
+    this.can_restrict_members = obj?.can_restrict_members
+    this.can_promote_members = obj?.can_promote_members
+    this.can_change_info = obj?.can_change_info
+    this.can_invite_users = obj?.can_invite_users
+    this.can_pin_messages = obj?.can_pin_messages
+    this.is_member = obj?.is_member
+    this.can_send_messages = obj?.can_send_messages
+    this.can_send_media_messages = obj?.can_send_media_messages
+    this.can_send_polls = obj?.can_send_polls
+    this.can_send_other_messages = obj?.can_send_other_messages
+    this.can_add_web_page_previews = obj?.can_add_web_page_previews
+    this.until_date = obj?.until_date
   }
  
 }

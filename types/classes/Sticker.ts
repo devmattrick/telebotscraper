@@ -56,16 +56,16 @@ export default class Sticker {
   readonly file_size?: number;
 
   constructor(obj: { file_id: string, file_unique_id: string, width: number, height: number, is_animated: boolean, thumb?: PhotoSize, emoji?: string, set_name?: string, mask_position?: MaskPosition, file_size?: number,  } ) {
-    this.file_id = obj?.file_id;
-    this.file_unique_id = obj?.file_unique_id;
-    this.width = obj?.width;
-    this.height = obj?.height;
-    this.is_animated = obj?.is_animated;
-    this.thumb = obj?.thumb && new PhotoSize(obj.thumb);
-    this.emoji = obj?.emoji;
-    this.set_name = obj?.set_name;
-    this.mask_position = obj?.mask_position && new MaskPosition(obj.mask_position);
-    this.file_size = obj?.file_size;
+    this.file_id = obj?.file_id
+    this.file_unique_id = obj?.file_unique_id
+    this.width = obj?.width
+    this.height = obj?.height
+    this.is_animated = obj?.is_animated
+    this.thumb = obj?.thumb && new PhotoSize(obj.thumb)
+    this.emoji = obj?.emoji
+    this.set_name = obj?.set_name
+    this.mask_position = obj?.mask_position && new MaskPosition(obj.mask_position)
+    this.file_size = obj?.file_size
   }
  
 }
