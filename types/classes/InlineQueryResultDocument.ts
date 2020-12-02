@@ -12,88 +12,88 @@ export default class InlineQueryResultDocument {
   /**
   * Type of the result, must be document
   */
-  type: string;
+  readonly type: string;
 
   /**
   * Unique identifier for this result, 1-64 bytes
   */
-  id: string;
+  readonly id: string;
 
   /**
   * Title for the result
   */
-  title: string;
+  readonly title: string;
 
   /**
   * Optional. Caption of the document to be sent, 0-1024 characters after entities parsing
   */
-  caption?: string;
+  readonly caption?: string;
 
   /**
   * Optional. Mode for parsing entities in the document caption. See formatting options for more details.
   */
-  parse_mode?: string;
+  readonly parse_mode?: string;
 
   /**
   * Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
   */
-  caption_entities?: MessageEntity[];
+  readonly caption_entities?: MessageEntity[];
 
   /**
   * A valid URL for the file
   */
-  document_url: string;
+  readonly document_url: string;
 
   /**
   * Mime type of the content of the file, either “application/pdf” or “application/zip”
   */
-  mime_type: string;
+  readonly mime_type: string;
 
   /**
   * Optional. Short description of the result
   */
-  description?: string;
+  readonly description?: string;
 
   /**
   * Optional. Inline keyboard attached to the message
   */
-  reply_markup?: InlineKeyboardMarkup;
+  readonly reply_markup?: InlineKeyboardMarkup;
 
   /**
   * Optional. Content of the message to be sent instead of the file
   */
-  input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
+  readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   /**
   * Optional. URL of the thumbnail (jpeg only) for the file
   */
-  thumb_url?: string;
+  readonly thumb_url?: string;
 
   /**
   * Optional. Thumbnail width
   */
-  thumb_width?: number;
+  readonly thumb_width?: number;
 
   /**
   * Optional. Thumbnail height
   */
-  thumb_height?: number;
+  readonly thumb_height?: number;
 
   constructor(obj: { type: string, id: string, title: string, document_url: string, mime_type: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], description?: string, reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent), thumb_url?: string, thumb_width?: number, thumb_height?: number,  } ) {
-    this.type = obj.type;
-    this.id = obj.id;
-    this.title = obj.title;
-    this.caption = obj.caption;
-    this.parse_mode = obj.parse_mode;
-    this.caption_entities = obj.caption_entities;
-    this.document_url = obj.document_url;
-    this.mime_type = obj.mime_type;
-    this.description = obj.description;
-    this.reply_markup = obj.reply_markup;
-    this.input_message_content = obj.input_message_content;
-    this.thumb_url = obj.thumb_url;
-    this.thumb_width = obj.thumb_width;
-    this.thumb_height = obj.thumb_height;
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.title = obj?.title;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities;
+    this.document_url = obj?.document_url;
+    this.mime_type = obj?.mime_type;
+    this.description = obj?.description;
+    this.reply_markup = obj?.reply_markup;
+    this.input_message_content = obj?.input_message_content;
+    this.thumb_url = obj?.thumb_url;
+    this.thumb_width = obj?.thumb_width;
+    this.thumb_height = obj?.thumb_height;
   }
  
 }

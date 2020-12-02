@@ -7,10 +7,10 @@ export default class InlineKeyboardMarkup {
   /**
   * Array of button rows, each represented by an Array of InlineKeyboardButton objects
   */
-  inline_keyboard: InlineKeyboardButton[][];
+  readonly inline_keyboard: InlineKeyboardButton[][];
 
   constructor(obj: { inline_keyboard: InlineKeyboardButton[][],  } ) {
-    this.inline_keyboard = obj.inline_keyboard;
+    this.inline_keyboard = obj?.inline_keyboard;
   }
  
 }

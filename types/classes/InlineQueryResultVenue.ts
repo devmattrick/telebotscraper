@@ -11,94 +11,94 @@ export default class InlineQueryResultVenue {
   /**
   * Type of the result, must be venue
   */
-  type: string;
+  readonly type: string;
 
   /**
   * Unique identifier for this result, 1-64 Bytes
   */
-  id: string;
+  readonly id: string;
 
   /**
   * Latitude of the venue location in degrees
   */
-  latitude: number;
+  readonly latitude: number;
 
   /**
   * Longitude of the venue location in degrees
   */
-  longitude: number;
+  readonly longitude: number;
 
   /**
   * Title of the venue
   */
-  title: string;
+  readonly title: string;
 
   /**
   * Address of the venue
   */
-  address: string;
+  readonly address: string;
 
   /**
   * Optional. Foursquare identifier of the venue if known
   */
-  foursquare_id?: string;
+  readonly foursquare_id?: string;
 
   /**
   * Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
   */
-  foursquare_type?: string;
+  readonly foursquare_type?: string;
 
   /**
   * Optional. Google Places identifier of the venue
   */
-  google_place_id?: string;
+  readonly google_place_id?: string;
 
   /**
   * Optional. Google Places type of the venue. (See supported types.)
   */
-  google_place_type?: string;
+  readonly google_place_type?: string;
 
   /**
   * Optional. Inline keyboard attached to the message
   */
-  reply_markup?: InlineKeyboardMarkup;
+  readonly reply_markup?: InlineKeyboardMarkup;
 
   /**
   * Optional. Content of the message to be sent instead of the venue
   */
-  input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
+  readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   /**
   * Optional. Url of the thumbnail for the result
   */
-  thumb_url?: string;
+  readonly thumb_url?: string;
 
   /**
   * Optional. Thumbnail width
   */
-  thumb_width?: number;
+  readonly thumb_width?: number;
 
   /**
   * Optional. Thumbnail height
   */
-  thumb_height?: number;
+  readonly thumb_height?: number;
 
   constructor(obj: { type: string, id: string, latitude: number, longitude: number, title: string, address: string, foursquare_id?: string, foursquare_type?: string, google_place_id?: string, google_place_type?: string, reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent), thumb_url?: string, thumb_width?: number, thumb_height?: number,  } ) {
-    this.type = obj.type;
-    this.id = obj.id;
-    this.latitude = obj.latitude;
-    this.longitude = obj.longitude;
-    this.title = obj.title;
-    this.address = obj.address;
-    this.foursquare_id = obj.foursquare_id;
-    this.foursquare_type = obj.foursquare_type;
-    this.google_place_id = obj.google_place_id;
-    this.google_place_type = obj.google_place_type;
-    this.reply_markup = obj.reply_markup;
-    this.input_message_content = obj.input_message_content;
-    this.thumb_url = obj.thumb_url;
-    this.thumb_width = obj.thumb_width;
-    this.thumb_height = obj.thumb_height;
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.latitude = obj?.latitude;
+    this.longitude = obj?.longitude;
+    this.title = obj?.title;
+    this.address = obj?.address;
+    this.foursquare_id = obj?.foursquare_id;
+    this.foursquare_type = obj?.foursquare_type;
+    this.google_place_id = obj?.google_place_id;
+    this.google_place_type = obj?.google_place_type;
+    this.reply_markup = obj?.reply_markup;
+    this.input_message_content = obj?.input_message_content;
+    this.thumb_url = obj?.thumb_url;
+    this.thumb_width = obj?.thumb_width;
+    this.thumb_height = obj?.thumb_height;
   }
  
 }

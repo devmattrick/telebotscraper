@@ -6,28 +6,28 @@ export default class InputContactMessageContent {
   /**
   * Contact&#x27;s phone number
   */
-  phone_number: string;
+  readonly phone_number: string;
 
   /**
   * Contact&#x27;s first name
   */
-  first_name: string;
+  readonly first_name: string;
 
   /**
   * Optional. Contact&#x27;s last name
   */
-  last_name?: string;
+  readonly last_name?: string;
 
   /**
   * Optional. Additional data about the contact in the form of a vCard, 0-2048 bytes
   */
-  vcard?: string;
+  readonly vcard?: string;
 
   constructor(obj: { phone_number: string, first_name: string, last_name?: string, vcard?: string,  } ) {
-    this.phone_number = obj.phone_number;
-    this.first_name = obj.first_name;
-    this.last_name = obj.last_name;
-    this.vcard = obj.vcard;
+    this.phone_number = obj?.phone_number;
+    this.first_name = obj?.first_name;
+    this.last_name = obj?.last_name;
+    this.vcard = obj?.vcard;
   }
  
 }

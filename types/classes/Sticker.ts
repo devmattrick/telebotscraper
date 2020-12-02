@@ -8,64 +8,64 @@ export default class Sticker {
   /**
   * Identifier for this file, which can be used to download or reuse the file
   */
-  file_id: string;
+  readonly file_id: string;
 
   /**
   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#x27;t be used to download or reuse the file.
   */
-  file_unique_id: string;
+  readonly file_unique_id: string;
 
   /**
   * Sticker width
   */
-  width: number;
+  readonly width: number;
 
   /**
   * Sticker height
   */
-  height: number;
+  readonly height: number;
 
   /**
   * true, if the sticker is animated
   */
-  is_animated: boolean;
+  readonly is_animated: boolean;
 
   /**
   * Optional. Sticker thumbnail in the .WEBP or .JPG format
   */
-  thumb?: PhotoSize;
+  readonly thumb?: PhotoSize;
 
   /**
   * Optional. Emoji associated with the sticker
   */
-  emoji?: string;
+  readonly emoji?: string;
 
   /**
   * Optional. Name of the sticker set to which the sticker belongs
   */
-  set_name?: string;
+  readonly set_name?: string;
 
   /**
   * Optional. For mask stickers, the position where the mask should be placed
   */
-  mask_position?: MaskPosition;
+  readonly mask_position?: MaskPosition;
 
   /**
   * Optional. File size
   */
-  file_size?: number;
+  readonly file_size?: number;
 
   constructor(obj: { file_id: string, file_unique_id: string, width: number, height: number, is_animated: boolean, thumb?: PhotoSize, emoji?: string, set_name?: string, mask_position?: MaskPosition, file_size?: number,  } ) {
-    this.file_id = obj.file_id;
-    this.file_unique_id = obj.file_unique_id;
-    this.width = obj.width;
-    this.height = obj.height;
-    this.is_animated = obj.is_animated;
-    this.thumb = obj.thumb;
-    this.emoji = obj.emoji;
-    this.set_name = obj.set_name;
-    this.mask_position = obj.mask_position;
-    this.file_size = obj.file_size;
+    this.file_id = obj?.file_id;
+    this.file_unique_id = obj?.file_unique_id;
+    this.width = obj?.width;
+    this.height = obj?.height;
+    this.is_animated = obj?.is_animated;
+    this.thumb = obj?.thumb;
+    this.emoji = obj?.emoji;
+    this.set_name = obj?.set_name;
+    this.mask_position = obj?.mask_position;
+    this.file_size = obj?.file_size;
   }
  
 }

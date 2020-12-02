@@ -7,22 +7,22 @@ export default class ShippingOption {
   /**
   * Shipping option identifier
   */
-  id: string;
+  readonly id: string;
 
   /**
   * Option title
   */
-  title: string;
+  readonly title: string;
 
   /**
   * List of price portions
   */
-  prices: LabeledPrice[];
+  readonly prices: LabeledPrice[];
 
   constructor(obj: { id: string, title: string, prices: LabeledPrice[],  } ) {
-    this.id = obj.id;
-    this.title = obj.title;
-    this.prices = obj.prices;
+    this.id = obj?.id;
+    this.title = obj?.title;
+    this.prices = obj?.prices;
   }
  
 }

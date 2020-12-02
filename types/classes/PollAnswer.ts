@@ -7,22 +7,22 @@ export default class PollAnswer {
   /**
   * Unique poll identifier
   */
-  poll_id: string;
+  readonly poll_id: string;
 
   /**
   * The user, who changed the answer to the poll
   */
-  user: User;
+  readonly user: User;
 
   /**
   * 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
   */
-  option_ids: number[];
+  readonly option_ids: number[];
 
   constructor(obj: { poll_id: string, user: User, option_ids: number[],  } ) {
-    this.poll_id = obj.poll_id;
-    this.user = obj.user;
-    this.option_ids = obj.option_ids;
+    this.poll_id = obj?.poll_id;
+    this.user = obj?.user;
+    this.option_ids = obj?.option_ids;
   }
  
 }

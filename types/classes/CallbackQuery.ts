@@ -8,46 +8,46 @@ export default class CallbackQuery {
   /**
   * Unique identifier for this query
   */
-  id: string;
+  readonly id: string;
 
   /**
   * Sender
   */
-  from: User;
+  readonly from: User;
 
   /**
   * Optional. Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old
   */
-  message?: Message;
+  readonly message?: Message;
 
   /**
   * Optional. Identifier of the message sent via the bot in inline mode, that originated the query.
   */
-  inline_message_id?: string;
+  readonly inline_message_id?: string;
 
   /**
   * Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games.
   */
-  chat_instance: string;
+  readonly chat_instance: string;
 
   /**
   * Optional. Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.
   */
-  data?: string;
+  readonly data?: string;
 
   /**
   * Optional. Short name of a Game to be returned, serves as the unique identifier for the game
   */
-  game_short_name?: string;
+  readonly game_short_name?: string;
 
   constructor(obj: { id: string, from: User, chat_instance: string, message?: Message, inline_message_id?: string, data?: string, game_short_name?: string,  } ) {
-    this.id = obj.id;
-    this.from = obj.from;
-    this.message = obj.message;
-    this.inline_message_id = obj.inline_message_id;
-    this.chat_instance = obj.chat_instance;
-    this.data = obj.data;
-    this.game_short_name = obj.game_short_name;
+    this.id = obj?.id;
+    this.from = obj?.from;
+    this.message = obj?.message;
+    this.inline_message_id = obj?.inline_message_id;
+    this.chat_instance = obj?.chat_instance;
+    this.data = obj?.data;
+    this.game_short_name = obj?.game_short_name;
   }
  
 }

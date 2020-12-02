@@ -6,22 +6,22 @@ export default class EncryptedCredentials {
   /**
   * Base64-encoded encrypted JSON-serialized data with unique user&#x27;s payload, data hashes and secrets required for EncryptedPassportElement decryption and authentication
   */
-  data: string;
+  readonly data: string;
 
   /**
   * Base64-encoded data hash for data authentication
   */
-  hash: string;
+  readonly hash: string;
 
   /**
   * Base64-encoded secret, encrypted with the bot&#x27;s public RSA key, required for data decryption
   */
-  secret: string;
+  readonly secret: string;
 
   constructor(obj: { data: string, hash: string, secret: string,  } ) {
-    this.data = obj.data;
-    this.hash = obj.hash;
-    this.secret = obj.secret;
+    this.data = obj?.data;
+    this.hash = obj?.hash;
+    this.secret = obj?.secret;
   }
  
 }

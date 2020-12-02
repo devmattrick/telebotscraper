@@ -12,64 +12,64 @@ export default class InlineQueryResultCachedVideo {
   /**
   * Type of the result, must be video
   */
-  type: string;
+  readonly type: string;
 
   /**
   * Unique identifier for this result, 1-64 bytes
   */
-  id: string;
+  readonly id: string;
 
   /**
   * A valid file identifier for the video file
   */
-  video_file_id: string;
+  readonly video_file_id: string;
 
   /**
   * Title for the result
   */
-  title: string;
+  readonly title: string;
 
   /**
   * Optional. Short description of the result
   */
-  description?: string;
+  readonly description?: string;
 
   /**
   * Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
   */
-  caption?: string;
+  readonly caption?: string;
 
   /**
   * Optional. Mode for parsing entities in the video caption. See formatting options for more details.
   */
-  parse_mode?: string;
+  readonly parse_mode?: string;
 
   /**
   * Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
   */
-  caption_entities?: MessageEntity[];
+  readonly caption_entities?: MessageEntity[];
 
   /**
   * Optional. Inline keyboard attached to the message
   */
-  reply_markup?: InlineKeyboardMarkup;
+  readonly reply_markup?: InlineKeyboardMarkup;
 
   /**
   * Optional. Content of the message to be sent instead of the video
   */
-  input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
+  readonly input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent);
 
   constructor(obj: { type: string, id: string, video_file_id: string, title: string, description?: string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], reply_markup?: InlineKeyboardMarkup, input_message_content?: (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent),  } ) {
-    this.type = obj.type;
-    this.id = obj.id;
-    this.video_file_id = obj.video_file_id;
-    this.title = obj.title;
-    this.description = obj.description;
-    this.caption = obj.caption;
-    this.parse_mode = obj.parse_mode;
-    this.caption_entities = obj.caption_entities;
-    this.reply_markup = obj.reply_markup;
-    this.input_message_content = obj.input_message_content;
+    this.type = obj?.type;
+    this.id = obj?.id;
+    this.video_file_id = obj?.video_file_id;
+    this.title = obj?.title;
+    this.description = obj?.description;
+    this.caption = obj?.caption;
+    this.parse_mode = obj?.parse_mode;
+    this.caption_entities = obj?.caption_entities;
+    this.reply_markup = obj?.reply_markup;
+    this.input_message_content = obj?.input_message_content;
   }
  
 }

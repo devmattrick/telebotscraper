@@ -10,7 +10,7 @@ export default class {{schema.name}} {
   /**
   * {{field.description}}
   */
-  {{field.name}}{{#if field.optional}}?{{/if}}: {{field.type}};
+  readonly {{field.name}}{{#if field.optional}}?{{/if}}: {{field.type}};
 
   {{/each}}
   constructor(obj: { {{#each schema.fields as |field fieldKey|}}{{#unless field.optional}}{{field.name}}: {{field.type}}, {{/unless}}{{/each}}{{#each schema.fields as |field fieldKey|}}{{#if field.optional}}{{field.name}}?: {{field.type}}, {{/if}}{{/each}} } ) {

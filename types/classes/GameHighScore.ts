@@ -7,22 +7,22 @@ export default class GameHighScore {
   /**
   * Position in high score table for the game
   */
-  position: number;
+  readonly position: number;
 
   /**
   * User
   */
-  user: User;
+  readonly user: User;
 
   /**
   * Score
   */
-  score: number;
+  readonly score: number;
 
   constructor(obj: { position: number, user: User, score: number,  } ) {
-    this.position = obj.position;
-    this.user = obj.user;
-    this.score = obj.score;
+    this.position = obj?.position;
+    this.user = obj?.user;
+    this.score = obj?.score;
   }
  
 }
