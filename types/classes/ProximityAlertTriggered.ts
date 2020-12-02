@@ -20,8 +20,8 @@ export default class ProximityAlertTriggered {
   readonly distance: number;
 
   constructor(obj: { traveler: User, watcher: User, distance: number,  } ) {
-    this.traveler = new User(obj?.traveler);
-    this.watcher = new User(obj?.watcher);
+    this.traveler = obj?.traveler && new User(obj.traveler);
+    this.watcher = obj?.watcher && new User(obj.watcher);
     this.distance = obj?.distance;
   }
  

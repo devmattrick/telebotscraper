@@ -58,7 +58,7 @@ export default class Audio {
     this.file_name = obj?.file_name;
     this.mime_type = obj?.mime_type;
     this.file_size = obj?.file_size;
-    this.thumb = new PhotoSize(obj?.thumb);
+    this.thumb = obj?.thumb && new PhotoSize(obj.thumb);
   }
  
 }

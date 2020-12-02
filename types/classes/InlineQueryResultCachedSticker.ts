@@ -37,8 +37,8 @@ export default class InlineQueryResultCachedSticker {
     this.type = obj?.type;
     this.id = obj?.id;
     this.sticker_file_id = obj?.sticker_file_id;
-    this.reply_markup = new InlineKeyboardMarkup(obj?.reply_markup);
-    this.input_message_content = new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj?.input_message_content);
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
   }
  
 }

@@ -16,7 +16,7 @@ export default class UserProfilePhotos {
 
   constructor(obj: { total_count: number, photos: PhotoSize[][],  } ) {
     this.total_count = obj?.total_count;
-    this.photos = new PhotoSize[][](obj?.photos);
+    this.photos = obj?.photos && new PhotoSize[][](obj.photos);
   }
  
 }

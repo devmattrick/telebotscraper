@@ -27,9 +27,9 @@ export default class ShippingQuery {
 
   constructor(obj: { id: string, from: User, invoice_payload: string, shipping_address: ShippingAddress,  } ) {
     this.id = obj?.id;
-    this.from = new User(obj?.from);
+    this.from = obj?.from && new User(obj.from);
     this.invoice_payload = obj?.invoice_payload;
-    this.shipping_address = new ShippingAddress(obj?.shipping_address);
+    this.shipping_address = obj?.shipping_address && new ShippingAddress(obj.shipping_address);
   }
  
 }

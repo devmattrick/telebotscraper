@@ -88,8 +88,8 @@ export default class InlineQueryResultLocation {
     this.live_period = obj?.live_period;
     this.heading = obj?.heading;
     this.proximity_alert_radius = obj?.proximity_alert_radius;
-    this.reply_markup = new InlineKeyboardMarkup(obj?.reply_markup);
-    this.input_message_content = new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj?.input_message_content);
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
     this.thumb_url = obj?.thumb_url;
     this.thumb_width = obj?.thumb_width;
     this.thumb_height = obj?.thumb_height;

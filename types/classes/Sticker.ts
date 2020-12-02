@@ -61,10 +61,10 @@ export default class Sticker {
     this.width = obj?.width;
     this.height = obj?.height;
     this.is_animated = obj?.is_animated;
-    this.thumb = new PhotoSize(obj?.thumb);
+    this.thumb = obj?.thumb && new PhotoSize(obj.thumb);
     this.emoji = obj?.emoji;
     this.set_name = obj?.set_name;
-    this.mask_position = new MaskPosition(obj?.mask_position);
+    this.mask_position = obj?.mask_position && new MaskPosition(obj.mask_position);
     this.file_size = obj?.file_size;
   }
  

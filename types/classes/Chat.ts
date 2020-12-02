@@ -99,17 +99,17 @@ export default class Chat {
     this.username = obj?.username;
     this.first_name = obj?.first_name;
     this.last_name = obj?.last_name;
-    this.photo = new ChatPhoto(obj?.photo);
+    this.photo = obj?.photo && new ChatPhoto(obj.photo);
     this.bio = obj?.bio;
     this.description = obj?.description;
     this.invite_link = obj?.invite_link;
-    this.pinned_message = new Message(obj?.pinned_message);
-    this.permissions = new ChatPermissions(obj?.permissions);
+    this.pinned_message = obj?.pinned_message && new Message(obj.pinned_message);
+    this.permissions = obj?.permissions && new ChatPermissions(obj.permissions);
     this.slow_mode_delay = obj?.slow_mode_delay;
     this.sticker_set_name = obj?.sticker_set_name;
     this.can_set_sticker_set = obj?.can_set_sticker_set;
     this.linked_chat_id = obj?.linked_chat_id;
-    this.location = new ChatLocation(obj?.location);
+    this.location = obj?.location && new ChatLocation(obj.location);
   }
  
 }

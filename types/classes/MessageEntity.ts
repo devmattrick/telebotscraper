@@ -39,7 +39,7 @@ export default class MessageEntity {
     this.offset = obj?.offset;
     this.length = obj?.length;
     this.url = obj?.url;
-    this.user = new User(obj?.user);
+    this.user = obj?.user && new User(obj.user);
     this.language = obj?.language;
   }
  

@@ -94,8 +94,8 @@ export default class InlineQueryResultVenue {
     this.foursquare_type = obj?.foursquare_type;
     this.google_place_id = obj?.google_place_id;
     this.google_place_type = obj?.google_place_type;
-    this.reply_markup = new InlineKeyboardMarkup(obj?.reply_markup);
-    this.input_message_content = new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj?.input_message_content);
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
     this.thumb_url = obj?.thumb_url;
     this.thumb_width = obj?.thumb_width;
     this.thumb_height = obj?.thumb_height;

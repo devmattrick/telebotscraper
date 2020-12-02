@@ -39,10 +39,10 @@ export default class Game {
   constructor(obj: { title: string, description: string, photo: PhotoSize[], text?: string, text_entities?: MessageEntity[], animation?: Animation,  } ) {
     this.title = obj?.title;
     this.description = obj?.description;
-    this.photo = new PhotoSize[](obj?.photo);
+    this.photo = obj?.photo && new PhotoSize[](obj.photo);
     this.text = obj?.text;
-    this.text_entities = new MessageEntity[](obj?.text_entities);
-    this.animation = new Animation(obj?.animation);
+    this.text_entities = obj?.text_entities && new MessageEntity[](obj.text_entities);
+    this.animation = obj?.animation && new Animation(obj.animation);
   }
  
 }

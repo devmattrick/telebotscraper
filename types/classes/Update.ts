@@ -73,17 +73,17 @@ export default class Update {
 
   constructor(obj: { update_id: number, message?: Message, edited_message?: Message, channel_post?: Message, edited_channel_post?: Message, inline_query?: InlineQuery, chosen_inline_result?: ChosenInlineResult, callback_query?: CallbackQuery, shipping_query?: ShippingQuery, pre_checkout_query?: PreCheckoutQuery, poll?: Poll, poll_answer?: PollAnswer,  } ) {
     this.update_id = obj?.update_id;
-    this.message = new Message(obj?.message);
-    this.edited_message = new Message(obj?.edited_message);
-    this.channel_post = new Message(obj?.channel_post);
-    this.edited_channel_post = new Message(obj?.edited_channel_post);
-    this.inline_query = new InlineQuery(obj?.inline_query);
-    this.chosen_inline_result = new ChosenInlineResult(obj?.chosen_inline_result);
-    this.callback_query = new CallbackQuery(obj?.callback_query);
-    this.shipping_query = new ShippingQuery(obj?.shipping_query);
-    this.pre_checkout_query = new PreCheckoutQuery(obj?.pre_checkout_query);
-    this.poll = new Poll(obj?.poll);
-    this.poll_answer = new PollAnswer(obj?.poll_answer);
+    this.message = obj?.message && new Message(obj.message);
+    this.edited_message = obj?.edited_message && new Message(obj.edited_message);
+    this.channel_post = obj?.channel_post && new Message(obj.channel_post);
+    this.edited_channel_post = obj?.edited_channel_post && new Message(obj.edited_channel_post);
+    this.inline_query = obj?.inline_query && new InlineQuery(obj.inline_query);
+    this.chosen_inline_result = obj?.chosen_inline_result && new ChosenInlineResult(obj.chosen_inline_result);
+    this.callback_query = obj?.callback_query && new CallbackQuery(obj.callback_query);
+    this.shipping_query = obj?.shipping_query && new ShippingQuery(obj.shipping_query);
+    this.pre_checkout_query = obj?.pre_checkout_query && new PreCheckoutQuery(obj.pre_checkout_query);
+    this.poll = obj?.poll && new Poll(obj.poll);
+    this.poll_answer = obj?.poll_answer && new PollAnswer(obj.poll_answer);
   }
  
 }

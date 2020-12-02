@@ -22,7 +22,7 @@ export default class ShippingOption {
   constructor(obj: { id: string, title: string, prices: LabeledPrice[],  } ) {
     this.id = obj?.id;
     this.title = obj?.title;
-    this.prices = new LabeledPrice[](obj?.prices);
+    this.prices = obj?.prices && new LabeledPrice[](obj.prices);
   }
  
 }

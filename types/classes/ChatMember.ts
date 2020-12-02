@@ -105,7 +105,7 @@ export default class ChatMember {
   readonly until_date?: number;
 
   constructor(obj: { user: User, status: string, custom_title?: string, is_anonymous?: boolean, can_be_edited?: boolean, can_post_messages?: boolean, can_edit_messages?: boolean, can_delete_messages?: boolean, can_restrict_members?: boolean, can_promote_members?: boolean, can_change_info?: boolean, can_invite_users?: boolean, can_pin_messages?: boolean, is_member?: boolean, can_send_messages?: boolean, can_send_media_messages?: boolean, can_send_polls?: boolean, can_send_other_messages?: boolean, can_add_web_page_previews?: boolean, until_date?: number,  } ) {
-    this.user = new User(obj?.user);
+    this.user = obj?.user && new User(obj.user);
     this.status = obj?.status;
     this.custom_title = obj?.custom_title;
     this.is_anonymous = obj?.is_anonymous;

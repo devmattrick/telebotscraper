@@ -21,7 +21,7 @@ export default class PollAnswer {
 
   constructor(obj: { poll_id: string, user: User, option_ids: number[],  } ) {
     this.poll_id = obj?.poll_id;
-    this.user = new User(obj?.user);
+    this.user = obj?.user && new User(obj.user);
     this.option_ids = obj?.option_ids;
   }
  

@@ -58,10 +58,10 @@ export default class InputMediaVideo {
   constructor(obj: { type: string, media: string, thumb?: InputFile | string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], width?: number, height?: number, duration?: number, supports_streaming?: boolean,  } ) {
     this.type = obj?.type;
     this.media = obj?.media;
-    this.thumb = new InputFile | string(obj?.thumb);
+    this.thumb = obj?.thumb && new InputFile | string(obj.thumb);
     this.caption = obj?.caption;
     this.parse_mode = obj?.parse_mode;
-    this.caption_entities = new MessageEntity[](obj?.caption_entities);
+    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
     this.width = obj?.width;
     this.height = obj?.height;
     this.duration = obj?.duration;

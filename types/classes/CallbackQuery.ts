@@ -42,8 +42,8 @@ export default class CallbackQuery {
 
   constructor(obj: { id: string, from: User, chat_instance: string, message?: Message, inline_message_id?: string, data?: string, game_short_name?: string,  } ) {
     this.id = obj?.id;
-    this.from = new User(obj?.from);
-    this.message = new Message(obj?.message);
+    this.from = obj?.from && new User(obj.from);
+    this.message = obj?.message && new Message(obj.message);
     this.inline_message_id = obj?.inline_message_id;
     this.chat_instance = obj?.chat_instance;
     this.data = obj?.data;

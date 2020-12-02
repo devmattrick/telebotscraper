@@ -34,7 +34,7 @@ export default class InputMediaPhoto {
     this.media = obj?.media;
     this.caption = obj?.caption;
     this.parse_mode = obj?.parse_mode;
-    this.caption_entities = new MessageEntity[](obj?.caption_entities);
+    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
   }
  
 }

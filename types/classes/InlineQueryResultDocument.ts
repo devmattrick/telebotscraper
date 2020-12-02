@@ -85,12 +85,12 @@ export default class InlineQueryResultDocument {
     this.title = obj?.title;
     this.caption = obj?.caption;
     this.parse_mode = obj?.parse_mode;
-    this.caption_entities = new MessageEntity[](obj?.caption_entities);
+    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
     this.document_url = obj?.document_url;
     this.mime_type = obj?.mime_type;
     this.description = obj?.description;
-    this.reply_markup = new InlineKeyboardMarkup(obj?.reply_markup);
-    this.input_message_content = new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj?.input_message_content);
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
+    this.input_message_content = obj?.input_message_content && new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj.input_message_content);
     this.thumb_url = obj?.thumb_url;
     this.thumb_width = obj?.thumb_width;
     this.thumb_height = obj?.thumb_height;

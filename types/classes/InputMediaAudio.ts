@@ -53,10 +53,10 @@ export default class InputMediaAudio {
   constructor(obj: { type: string, media: string, thumb?: InputFile | string, caption?: string, parse_mode?: string, caption_entities?: MessageEntity[], duration?: number, performer?: string, title?: string,  } ) {
     this.type = obj?.type;
     this.media = obj?.media;
-    this.thumb = new InputFile | string(obj?.thumb);
+    this.thumb = obj?.thumb && new InputFile | string(obj.thumb);
     this.caption = obj?.caption;
     this.parse_mode = obj?.parse_mode;
-    this.caption_entities = new MessageEntity[](obj?.caption_entities);
+    this.caption_entities = obj?.caption_entities && new MessageEntity[](obj.caption_entities);
     this.duration = obj?.duration;
     this.performer = obj?.performer;
     this.title = obj?.title;

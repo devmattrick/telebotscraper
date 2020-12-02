@@ -28,7 +28,7 @@ export default class InlineQueryResultGame {
     this.type = obj?.type;
     this.id = obj?.id;
     this.game_short_name = obj?.game_short_name;
-    this.reply_markup = new InlineKeyboardMarkup(obj?.reply_markup);
+    this.reply_markup = obj?.reply_markup && new InlineKeyboardMarkup(obj.reply_markup);
   }
  
 }
