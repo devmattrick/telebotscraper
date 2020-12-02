@@ -55,7 +55,7 @@ export default class Animation {
     this.width = obj?.width;
     this.height = obj?.height;
     this.duration = obj?.duration;
-    this.thumb = obj?.thumb;
+    this.thumb = new PhotoSize(obj?.thumb);
     this.file_name = obj?.file_name;
     this.mime_type = obj?.mime_type;
     this.file_size = obj?.file_size;

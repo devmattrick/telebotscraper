@@ -67,8 +67,8 @@ export default class InlineQueryResultArticle {
     this.type = obj?.type;
     this.id = obj?.id;
     this.title = obj?.title;
-    this.input_message_content = obj?.input_message_content;
-    this.reply_markup = obj?.reply_markup;
+    this.input_message_content = new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj?.input_message_content);
+    this.reply_markup = new InlineKeyboardMarkup(obj?.reply_markup);
     this.url = obj?.url;
     this.hide_url = obj?.hide_url;
     this.description = obj?.description;

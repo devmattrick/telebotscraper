@@ -16,8 +16,8 @@ export default class PassportData {
   readonly credentials: EncryptedCredentials;
 
   constructor(obj: { data: EncryptedPassportElement[], credentials: EncryptedCredentials,  } ) {
-    this.data = obj?.data;
-    this.credentials = obj?.credentials;
+    this.data = new EncryptedPassportElement[](obj?.data);
+    this.credentials = new EncryptedCredentials(obj?.credentials);
   }
  
 }

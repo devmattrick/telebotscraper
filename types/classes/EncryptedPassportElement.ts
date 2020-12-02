@@ -59,11 +59,11 @@ export default class EncryptedPassportElement {
     this.data = obj?.data;
     this.phone_number = obj?.phone_number;
     this.email = obj?.email;
-    this.files = obj?.files;
-    this.front_side = obj?.front_side;
-    this.reverse_side = obj?.reverse_side;
-    this.selfie = obj?.selfie;
-    this.translation = obj?.translation;
+    this.files = new PassportFile[](obj?.files);
+    this.front_side = new PassportFile(obj?.front_side);
+    this.reverse_side = new PassportFile(obj?.reverse_side);
+    this.selfie = new PassportFile(obj?.selfie);
+    this.translation = new PassportFile[](obj?.translation);
     this.hash = obj?.hash;
   }
  

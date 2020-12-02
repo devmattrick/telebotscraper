@@ -85,9 +85,9 @@ export default class InlineQueryResultPhoto {
     this.description = obj?.description;
     this.caption = obj?.caption;
     this.parse_mode = obj?.parse_mode;
-    this.caption_entities = obj?.caption_entities;
-    this.reply_markup = obj?.reply_markup;
-    this.input_message_content = obj?.input_message_content;
+    this.caption_entities = new MessageEntity[](obj?.caption_entities);
+    this.reply_markup = new InlineKeyboardMarkup(obj?.reply_markup);
+    this.input_message_content = new (InputTextMessageContent | InputLocationMessageContent | InputVenueMessageContent | InputContactMessageContent)(obj?.input_message_content);
   }
  
 }

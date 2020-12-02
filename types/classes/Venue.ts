@@ -40,7 +40,7 @@ export default class Venue {
   readonly google_place_type?: string;
 
   constructor(obj: { location: Location, title: string, address: string, foursquare_id?: string, foursquare_type?: string, google_place_id?: string, google_place_type?: string,  } ) {
-    this.location = obj?.location;
+    this.location = new Location(obj?.location);
     this.title = obj?.title;
     this.address = obj?.address;
     this.foursquare_id = obj?.foursquare_id;

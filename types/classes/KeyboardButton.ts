@@ -28,7 +28,7 @@ export default class KeyboardButton {
     this.text = obj?.text;
     this.request_contact = obj?.request_contact;
     this.request_location = obj?.request_location;
-    this.request_poll = obj?.request_poll;
+    this.request_poll = new KeyboardButtonPollType(obj?.request_poll);
   }
  
 }

@@ -28,7 +28,7 @@ export default class OrderInfo {
     this.name = obj?.name;
     this.phone_number = obj?.phone_number;
     this.email = obj?.email;
-    this.shipping_address = obj?.shipping_address;
+    this.shipping_address = new ShippingAddress(obj?.shipping_address);
   }
  
 }

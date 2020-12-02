@@ -21,7 +21,7 @@ export default class GameHighScore {
 
   constructor(obj: { position: number, user: User, score: number,  } ) {
     this.position = obj?.position;
-    this.user = obj?.user;
+    this.user = new User(obj?.user);
     this.score = obj?.score;
   }
  

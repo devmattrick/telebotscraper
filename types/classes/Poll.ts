@@ -73,7 +73,7 @@ export default class Poll {
   constructor(obj: { id: string, question: string, options: PollOption[], total_voter_count: number, is_closed: boolean, is_anonymous: boolean, type: string, allows_multiple_answers: boolean, correct_option_id?: number, explanation?: string, explanation_entities?: MessageEntity[], open_period?: number, close_date?: number,  } ) {
     this.id = obj?.id;
     this.question = obj?.question;
-    this.options = obj?.options;
+    this.options = new PollOption[](obj?.options);
     this.total_voter_count = obj?.total_voter_count;
     this.is_closed = obj?.is_closed;
     this.is_anonymous = obj?.is_anonymous;
@@ -81,7 +81,7 @@ export default class Poll {
     this.allows_multiple_answers = obj?.allows_multiple_answers;
     this.correct_option_id = obj?.correct_option_id;
     this.explanation = obj?.explanation;
-    this.explanation_entities = obj?.explanation_entities;
+    this.explanation_entities = new MessageEntity[](obj?.explanation_entities);
     this.open_period = obj?.open_period;
     this.close_date = obj?.close_date;
   }

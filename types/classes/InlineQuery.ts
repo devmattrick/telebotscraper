@@ -32,8 +32,8 @@ export default class InlineQuery {
 
   constructor(obj: { id: string, from: User, query: string, offset: string, location?: Location,  } ) {
     this.id = obj?.id;
-    this.from = obj?.from;
-    this.location = obj?.location;
+    this.from = new User(obj?.from);
+    this.location = new Location(obj?.location);
     this.query = obj?.query;
     this.offset = obj?.offset;
   }

@@ -40,8 +40,8 @@ export default class StickerSet {
     this.title = obj?.title;
     this.is_animated = obj?.is_animated;
     this.contains_masks = obj?.contains_masks;
-    this.stickers = obj?.stickers;
-    this.thumb = obj?.thumb;
+    this.stickers = new Sticker[](obj?.stickers);
+    this.thumb = new PhotoSize(obj?.thumb);
   }
  
 }

@@ -39,7 +39,7 @@ export default class VideoNote {
     this.file_unique_id = obj?.file_unique_id;
     this.length = obj?.length;
     this.duration = obj?.duration;
-    this.thumb = obj?.thumb;
+    this.thumb = new PhotoSize(obj?.thumb);
     this.file_size = obj?.file_size;
   }
  

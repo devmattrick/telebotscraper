@@ -2,8 +2,18 @@ const Handlebars = require("handlebars");
 const { readFileSync } = require("fs");
 const { outputFile } = require("fs-extra");
 
-Handlebars.registerHelper('curly', function (object, open) {
-  return open ? '{' : '}';
+Handlebars.registerHelper('curly', function (object, moreparam) {
+  return moreparam ? '{' : '}';
+});
+
+Handlebars.registerHelper('eq', function (s1, s2) {
+  return s1 === s2;
+});
+
+Handlebars.registerHelper('isCapital', function (object) {
+  const l = String(object).charAt(0);
+  const out = (l === l.toUpperCase());
+  return out;
 });
 
 const typesTemplate = Handlebars.compile(readFileSync("templateclasses.hbs").toString());
@@ -48,9 +58,9 @@ dataObj.schemas.forEach((schema) => {
 
   schema.complexTypes = {};
   schema.fields.forEach(field => {
-    field.type.split(/\W+/).filter(t=>t.length).filter(t=>t.charAt(0)===t.charAt(0).toUpperCase()).forEach(type => {
-            
-        schema.complexTypes[type] = type;
+    field.type.split(/\W+/).filter(t => t.length).filter(t => t.charAt(0) === t.charAt(0).toUpperCase()).forEach(type => {
+
+      schema.complexTypes[type] = type;
     })
   })
 
@@ -62,6 +72,6 @@ dataObj.schemas.forEach((schema) => {
 outputFile('./types/classes/InputFile.ts', "import fs from 'fs';\nexport default class InputFile extends fs.ReadStream{}")
   .catch((err) => console.error(err));
 
-  
+
 outputFile(`./types/Api.ts`, apiTemplate(dataObj))
   .catch((err) => console.error(err));

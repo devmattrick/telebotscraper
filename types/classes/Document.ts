@@ -37,7 +37,7 @@ export default class Document {
   constructor(obj: { file_id: string, file_unique_id: string, thumb?: PhotoSize, file_name?: string, mime_type?: string, file_size?: number,  } ) {
     this.file_id = obj?.file_id;
     this.file_unique_id = obj?.file_unique_id;
-    this.thumb = obj?.thumb;
+    this.thumb = new PhotoSize(obj?.thumb);
     this.file_name = obj?.file_name;
     this.mime_type = obj?.mime_type;
     this.file_size = obj?.file_size;

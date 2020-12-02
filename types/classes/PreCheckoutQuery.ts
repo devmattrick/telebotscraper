@@ -42,12 +42,12 @@ export default class PreCheckoutQuery {
 
   constructor(obj: { id: string, from: User, currency: string, total_amount: number, invoice_payload: string, shipping_option_id?: string, order_info?: OrderInfo,  } ) {
     this.id = obj?.id;
-    this.from = obj?.from;
+    this.from = new User(obj?.from);
     this.currency = obj?.currency;
     this.total_amount = obj?.total_amount;
     this.invoice_payload = obj?.invoice_payload;
     this.shipping_option_id = obj?.shipping_option_id;
-    this.order_info = obj?.order_info;
+    this.order_info = new OrderInfo(obj?.order_info);
   }
  
 }
