@@ -13,7 +13,8 @@ Handlebars.registerHelper('eq', function (s1, s2) {
 Handlebars.registerHelper('getDeclaration', function (name, type) {
   const l = String(type).charAt(0);
   const capital = (l === l.toUpperCase());
-  if (capital) {
+
+  if (capital && ("InputFile | string" !== type)) {
     if (type.indexOf("[][]") >= 0) {
       return `this.${name} = obj?.${name}?.map(o=>o.map(o2=>new ${type.replace("[][]", "")}(o2)));`;
     } else if (type.indexOf("[]") >= 0) {
