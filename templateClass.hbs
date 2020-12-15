@@ -1,0 +1,28 @@
+/**
+ * {{schema.description}}
+ */
+export default class {{schema.name}} {
+  {{#each schema.fields as |field fieldKey|}}{{#unless field.optional}}
+  /**
+   * {{field.description}}
+   */
+  {{field.name}}: {{field.type}};
+  {{/unless}}{{/each}}
+  {{#each schema.fields as |field fieldKey|}}{{#if field.optional}}
+  /**
+   * {{field.description}}
+   */
+  {{field.name}}?: {{field.type}};
+  {{/if}}{{/each}}
+  constructor(
+    {{#each schema.fields as |field fieldKey|}}{{#unless field.optional}}{{field.name}}: {{field.type}},
+    {{/unless}}{{/each}}
+    {{#each schema.fields as |field fieldKey|}}{{#if field.optional}}{{field.name}}?: {{field.type}},
+    {{/if}}{{/each}}
+  ){
+    {{#each schema.fields as |field fieldKey|}}{{#unless field.optional}}this.{{field.name}} = {{field.name}};
+    {{/unless}}{{/each}}
+    {{#each schema.fields as |field fieldKey|}}{{#if field.optional}}this.{{field.name}} = {{field.name}};
+    {{/if}}{{/each}}
+  }
+}

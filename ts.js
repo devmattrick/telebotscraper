@@ -2,6 +2,15 @@ const Handlebars = require("handlebars");
 const { readFileSync } = require("fs");
 const { outputFile } = require("fs-extra");
 
+const OUTPUT_TYPE = "type"; // "interface"  | "class" | "type"
+
+const files = {
+  interface: "template.hbs",
+  class: "templateClass.hbs",
+  type: "templateType.hbs",
+}
+
+const template = Handlebars.compile(readFileSync(files[OUTPUT_TYPE]).toString());
 
 const TYPE_CONVERSIONS = {
   "String": "string",
