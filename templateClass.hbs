@@ -1,16 +1,16 @@
 /**
- * {{schema.description}}
+ * {{{schema.description}}}
  */
 export default class {{schema.name}} {
   {{#each schema.fields as |field fieldKey|}}{{#unless field.optional}}
   /**
-   * {{field.description}}
+   * {{{field.description}}}
    */
   {{field.name}}: {{field.type}};
   {{/unless}}{{/each}}
   {{#each schema.fields as |field fieldKey|}}{{#if field.optional}}
   /**
-   * {{field.description}}
+   * {{{field.description}}}
    */
   {{field.name}}?: {{field.type}};
   {{/if}}{{/each}}
