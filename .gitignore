@@ -6,3 +6,5 @@ yarn-debug.log*
 npm-debug.log*
 package-lock.json
 npm-shrinkwrap.json
+
+typescript/
