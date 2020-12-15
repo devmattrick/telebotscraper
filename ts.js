@@ -39,7 +39,13 @@ data = data.replace(/"(\w+) or (\w+)"/g, `"$1 | $2"`);
 
 const dataObj = JSON.parse(data);
 
+
 dataObj.schemas.forEach((schema) => {
-  outputFile(`typescript/${schema.category}/${schema.name}.ts`, template({ schema }))
+  // Types found in document get imported
+  const imports = dataObj.schemas
+    .filter(impSchema => JSON.stringify(schema.fields.map(f=>f.type)).includes(impSchema.name))
+    .filter(s => s.name != schema.name)
+
+  outputFile(`typescript/${schema.category}/${schema.name}.ts`, template({ schema: schema, imports: imports }))
     .catch((err) => console.error(err));
 });
