@@ -2,7 +2,6 @@ const Handlebars = require("handlebars");
 const { readFileSync } = require("fs");
 const { outputFile } = require("fs-extra");
 
-const template = Handlebars.compile(readFileSync("template.hbs").toString());
 
 const TYPE_CONVERSIONS = {
   "String": "string",
@@ -32,6 +31,6 @@ data = data.replace(/"(\w+) or (\w+)"/g, `"$1 | $2"`);
 const dataObj = JSON.parse(data);
 
 dataObj.schemas.forEach((schema) => {
-  outputFile(`types/${schema.category}/${schema.name}.ts`, template({ schema }))
+  outputFile(`typescript/${schema.category}/${schema.name}.ts`, template({ schema }))
     .catch((err) => console.error(err));
 });
