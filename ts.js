@@ -2,7 +2,7 @@ const Handlebars = require("handlebars");
 const { readFileSync } = require("fs");
 const { outputFile } = require("fs-extra");
 
-const OUTPUT_TYPE = "type"; // "interface"  | "class" | "type"
+const OUTPUT_TYPE = "interface"; // "interface"  | "class" | "type"
 
 const files = {
   interface: "template.hbs",
