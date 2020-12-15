@@ -1,5 +1,5 @@
 {
-  "version": "Bot API 4.2",
+  "version": "Introducing Bot API 5.0",
   "schemas": [
     {
       "name": "Update",
@@ -9,7 +9,7 @@
         {
           "name": "update_id",
           "type": "Integer",
-          "description": "The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.",
+          "description": "The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you're using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.",
           "optional": false
         },
         {
@@ -69,7 +69,13 @@
         {
           "name": "poll",
           "type": "Poll",
-          "description": "Optional. New poll state. Bots receive only updates about polls, which are sent or stopped by the bot",
+          "description": "Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot",
+          "optional": true
+        },
+        {
+          "name": "poll_answer",
+          "type": "PollAnswer",
+          "description": "Optional. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.",
           "optional": true
         }
       ]
@@ -96,6 +102,12 @@
           "type": "Integer",
           "description": "Number of updates awaiting delivery",
           "optional": false
+        },
+        {
+          "name": "ip_address",
+          "type": "String",
+          "description": "Optional. Currently used webhook IP address",
+          "optional": true
         },
         {
           "name": "last_error_date",
@@ -143,25 +155,43 @@
         {
           "name": "first_name",
           "type": "String",
-          "description": "User‘s or bot’s first name",
+          "description": "User's or bot's first name",
           "optional": false
         },
         {
           "name": "last_name",
           "type": "String",
-          "description": "Optional. User‘s or bot’s last name",
+          "description": "Optional. User's or bot's last name",
           "optional": true
         },
         {
           "name": "username",
           "type": "String",
-          "description": "Optional. User‘s or bot’s username",
+          "description": "Optional. User's or bot's username",
           "optional": true
         },
         {
           "name": "language_code",
           "type": "String",
           "description": "Optional. IETF language tag of the user's language",
+          "optional": true
+        },
+        {
+          "name": "can_join_groups",
+          "type": "Boolean",
+          "description": "Optional. True, if the bot can be invited to groups. Returned only in getMe.",
+          "optional": true
+        },
+        {
+          "name": "can_read_all_group_messages",
+          "type": "Boolean",
+          "description": "Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.",
+          "optional": true
+        },
+        {
+          "name": "supports_inline_queries",
+          "type": "Boolean",
+          "description": "Optional. True, if the bot supports inline queries. Returned only in getMe.",
           "optional": true
         }
       ]
@@ -208,33 +238,45 @@
           "optional": true
         },
         {
-          "name": "all_members_are_administrators",
-          "type": "Boolean",
-          "description": "Optional. True if a group has ‘All Members Are Admins’ enabled.",
-          "optional": true
-        },
-        {
           "name": "photo",
           "type": "ChatPhoto",
           "description": "Optional. Chat photo. Returned only in getChat.",
           "optional": true
         },
         {
+          "name": "bio",
+          "type": "String",
+          "description": "Optional. Bio of the other party in a private chat. Returned only in getChat.",
+          "optional": true
+        },
+        {
           "name": "description",
           "type": "String",
-          "description": "Optional. Description, for supergroups and channel chats. Returned only in getChat.",
+          "description": "Optional. Description, for groups, supergroups and channel chats. Returned only in getChat.",
           "optional": true
         },
         {
           "name": "invite_link",
           "type": "String",
-          "description": "Optional. Chat invite link, for supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.",
+          "description": "Optional. Chat invite link, for groups, supergroups and channel chats. Each administrator in a chat generates their own invite links, so the bot must first generate the link using exportChatInviteLink. Returned only in getChat.",
           "optional": true
         },
         {
           "name": "pinned_message",
           "type": "Message",
-          "description": "Optional. Pinned message, for groups, supergroups and channels. Returned only in getChat.",
+          "description": "Optional. The most recent pinned message (by sending date). Returned only in getChat.",
+          "optional": true
+        },
+        {
+          "name": "permissions",
+          "type": "ChatPermissions",
+          "description": "Optional. Default chat member permissions, for groups and supergroups. Returned only in getChat.",
+          "optional": true
+        },
+        {
+          "name": "slow_mode_delay",
+          "type": "Integer",
+          "description": "Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in getChat.",
           "optional": true
         },
         {
@@ -247,6 +289,18 @@
           "name": "can_set_sticker_set",
           "type": "Boolean",
           "description": "Optional. True, if the bot can change the group sticker set. Returned only in getChat.",
+          "optional": true
+        },
+        {
+          "name": "linked_chat_id",
+          "type": "Integer",
+          "description": "Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in getChat.",
+          "optional": true
+        },
+        {
+          "name": "location",
+          "type": "ChatLocation",
+          "description": "Optional. For supergroups, the location to which the supergroup is connected. Returned only in getChat.",
           "optional": true
         }
       ]
@@ -266,6 +320,12 @@
           "name": "from",
           "type": "User",
           "description": "Optional. Sender, empty for messages sent to channels",
+          "optional": true
+        },
+        {
+          "name": "sender_chat",
+          "type": "Chat",
+          "description": "Optional. Sender of the message, sent on behalf of a chat. The channel itself for channel messages. The supergroup itself for messages from anonymous group administrators. The linked channel for messages automatically forwarded to the discussion group",
           "optional": true
         },
         {
@@ -289,7 +349,7 @@
         {
           "name": "forward_from_chat",
           "type": "Chat",
-          "description": "Optional. For messages forwarded from channels, information about the original channel",
+          "description": "Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat",
           "optional": true
         },
         {
@@ -323,6 +383,12 @@
           "optional": true
         },
         {
+          "name": "via_bot",
+          "type": "User",
+          "description": "Optional. Bot through which the message was sent",
+          "optional": true
+        },
+        {
           "name": "edit_date",
           "type": "Integer",
           "description": "Optional. Date the message was last edited in Unix time",
@@ -337,13 +403,13 @@
         {
           "name": "author_signature",
           "type": "String",
-          "description": "Optional. Signature of the post author for messages in channels",
+          "description": "Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator",
           "optional": true
         },
         {
           "name": "text",
           "type": "String",
-          "description": "Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters.",
+          "description": "Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters",
           "optional": true
         },
         {
@@ -353,9 +419,9 @@
           "optional": true
         },
         {
-          "name": "caption_entities",
-          "type": "Array of MessageEntity",
-          "description": "Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption",
+          "name": "animation",
+          "type": "Animation",
+          "description": "Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set",
           "optional": true
         },
         {
@@ -368,18 +434,6 @@
           "name": "document",
           "type": "Document",
           "description": "Optional. Message is a general file, information about the file",
-          "optional": true
-        },
-        {
-          "name": "animation",
-          "type": "Animation",
-          "description": "Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set",
-          "optional": true
-        },
-        {
-          "name": "game",
-          "type": "Game",
-          "description": "Optional. Message is a game, information about the game. More about games »",
           "optional": true
         },
         {
@@ -401,15 +455,15 @@
           "optional": true
         },
         {
-          "name": "voice",
-          "type": "Voice",
-          "description": "Optional. Message is a voice message, information about the file",
-          "optional": true
-        },
-        {
           "name": "video_note",
           "type": "VideoNote",
           "description": "Optional. Message is a video note, information about the video message",
+          "optional": true
+        },
+        {
+          "name": "voice",
+          "type": "Voice",
+          "description": "Optional. Message is a voice message, information about the file",
           "optional": true
         },
         {
@@ -419,27 +473,45 @@
           "optional": true
         },
         {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption",
+          "optional": true
+        },
+        {
           "name": "contact",
           "type": "Contact",
           "description": "Optional. Message is a shared contact, information about the contact",
           "optional": true
         },
         {
-          "name": "location",
-          "type": "Location",
-          "description": "Optional. Message is a shared location, information about the location",
+          "name": "dice",
+          "type": "Dice",
+          "description": "Optional. Message is a dice with random value from 1 to 6",
           "optional": true
         },
         {
-          "name": "venue",
-          "type": "Venue",
-          "description": "Optional. Message is a venue, information about the venue",
+          "name": "game",
+          "type": "Game",
+          "description": "Optional. Message is a game, information about the game. More about games »",
           "optional": true
         },
         {
           "name": "poll",
           "type": "Poll",
           "description": "Optional. Message is a native poll, information about the poll",
+          "optional": true
+        },
+        {
+          "name": "venue",
+          "type": "Venue",
+          "description": "Optional. Message is a venue, information about the venue. For backward compatibility, when this field is set, the location field will also be set",
+          "optional": true
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "description": "Optional. Message is a shared location, information about the location",
           "optional": true
         },
         {
@@ -481,13 +553,13 @@
         {
           "name": "supergroup_chat_created",
           "type": "True",
-          "description": "Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.",
+          "description": "Optional. Service message: the supergroup has been created. This field can't be received in a message coming through updates, because bot can't be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.",
           "optional": true
         },
         {
           "name": "channel_chat_created",
           "type": "True",
-          "description": "Optional. Service message: the channel has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.",
+          "description": "Optional. Service message: the channel has been created. This field can't be received in a message coming through updates, because bot can't be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.",
           "optional": true
         },
         {
@@ -531,6 +603,31 @@
           "type": "PassportData",
           "description": "Optional. Telegram Passport data",
           "optional": true
+        },
+        {
+          "name": "proximity_alert_triggered",
+          "type": "ProximityAlertTriggered",
+          "description": "Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.",
+          "optional": true
+        },
+        {
+          "name": "reply_markup",
+          "type": "InlineKeyboardMarkup",
+          "description": "Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "MessageId",
+      "description": "This object represents a unique message identifier.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "message_id",
+          "type": "Integer",
+          "description": "Unique message identifier",
+          "optional": false
         }
       ]
     },
@@ -542,7 +639,7 @@
         {
           "name": "type",
           "type": "String",
-          "description": "Type of the entity. Can be mention (@username), hashtag, cashtag, bot_command, url, email, phone_number, bold (bold text), italic (italic text), code (monowidth string), pre (monowidth block), text_link (for clickable text URLs), text_mention (for users without usernames)",
+          "description": "Type of the entity. Can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames)",
           "optional": false
         },
         {
@@ -568,6 +665,12 @@
           "type": "User",
           "description": "Optional. For “text_mention” only, the mentioned user",
           "optional": true
+        },
+        {
+          "name": "language",
+          "type": "String",
+          "description": "Optional. For “pre” only, the programming language of the entity text",
+          "optional": true
         }
       ]
     },
@@ -579,7 +682,13 @@
         {
           "name": "file_id",
           "type": "String",
-          "description": "Unique identifier for this file",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
@@ -603,141 +712,6 @@
       ]
     },
     {
-      "name": "Audio",
-      "description": "This object represents an audio file to be treated as music by the Telegram clients.",
-      "category": "core",
-      "fields": [
-        {
-          "name": "file_id",
-          "type": "String",
-          "description": "Unique identifier for this file",
-          "optional": false
-        },
-        {
-          "name": "duration",
-          "type": "Integer",
-          "description": "Duration of the audio in seconds as defined by sender",
-          "optional": false
-        },
-        {
-          "name": "performer",
-          "type": "String",
-          "description": "Optional. Performer of the audio as defined by sender or by audio tags",
-          "optional": true
-        },
-        {
-          "name": "title",
-          "type": "String",
-          "description": "Optional. Title of the audio as defined by sender or by audio tags",
-          "optional": true
-        },
-        {
-          "name": "mime_type",
-          "type": "String",
-          "description": "Optional. MIME type of the file as defined by sender",
-          "optional": true
-        },
-        {
-          "name": "file_size",
-          "type": "Integer",
-          "description": "Optional. File size",
-          "optional": true
-        },
-        {
-          "name": "thumb",
-          "type": "PhotoSize",
-          "description": "Optional. Thumbnail of the album cover to which the music file belongs",
-          "optional": true
-        }
-      ]
-    },
-    {
-      "name": "Document",
-      "description": "This object represents a general file (as opposed to photos, voice messages and audio files).",
-      "category": "core",
-      "fields": [
-        {
-          "name": "file_id",
-          "type": "String",
-          "description": "Unique file identifier",
-          "optional": false
-        },
-        {
-          "name": "thumb",
-          "type": "PhotoSize",
-          "description": "Optional. Document thumbnail as defined by sender",
-          "optional": true
-        },
-        {
-          "name": "file_name",
-          "type": "String",
-          "description": "Optional. Original filename as defined by sender",
-          "optional": true
-        },
-        {
-          "name": "mime_type",
-          "type": "String",
-          "description": "Optional. MIME type of the file as defined by sender",
-          "optional": true
-        },
-        {
-          "name": "file_size",
-          "type": "Integer",
-          "description": "Optional. File size",
-          "optional": true
-        }
-      ]
-    },
-    {
-      "name": "Video",
-      "description": "This object represents a video file.",
-      "category": "core",
-      "fields": [
-        {
-          "name": "file_id",
-          "type": "String",
-          "description": "Unique identifier for this file",
-          "optional": false
-        },
-        {
-          "name": "width",
-          "type": "Integer",
-          "description": "Video width as defined by sender",
-          "optional": false
-        },
-        {
-          "name": "height",
-          "type": "Integer",
-          "description": "Video height as defined by sender",
-          "optional": false
-        },
-        {
-          "name": "duration",
-          "type": "Integer",
-          "description": "Duration of the video in seconds as defined by sender",
-          "optional": false
-        },
-        {
-          "name": "thumb",
-          "type": "PhotoSize",
-          "description": "Optional. Video thumbnail",
-          "optional": true
-        },
-        {
-          "name": "mime_type",
-          "type": "String",
-          "description": "Optional. Mime type of a file as defined by sender",
-          "optional": true
-        },
-        {
-          "name": "file_size",
-          "type": "Integer",
-          "description": "Optional. File size",
-          "optional": true
-        }
-      ]
-    },
-    {
       "name": "Animation",
       "description": "This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).",
       "category": "core",
@@ -745,7 +719,13 @@
         {
           "name": "file_id",
           "type": "String",
-          "description": "Unique file identifier",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
@@ -793,14 +773,20 @@
       ]
     },
     {
-      "name": "Voice",
-      "description": "This object represents a voice note.",
+      "name": "Audio",
+      "description": "This object represents an audio file to be treated as music by the Telegram clients.",
       "category": "core",
       "fields": [
         {
           "name": "file_id",
           "type": "String",
-          "description": "Unique identifier for this file",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
@@ -810,9 +796,137 @@
           "optional": false
         },
         {
+          "name": "performer",
+          "type": "String",
+          "description": "Optional. Performer of the audio as defined by sender or by audio tags",
+          "optional": true
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "description": "Optional. Title of the audio as defined by sender or by audio tags",
+          "optional": true
+        },
+        {
+          "name": "file_name",
+          "type": "String",
+          "description": "Optional. Original filename as defined by sender",
+          "optional": true
+        },
+        {
           "name": "mime_type",
           "type": "String",
           "description": "Optional. MIME type of the file as defined by sender",
+          "optional": true
+        },
+        {
+          "name": "file_size",
+          "type": "Integer",
+          "description": "Optional. File size",
+          "optional": true
+        },
+        {
+          "name": "thumb",
+          "type": "PhotoSize",
+          "description": "Optional. Thumbnail of the album cover to which the music file belongs",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "Document",
+      "description": "This object represents a general file (as opposed to photos, voice messages and audio files).",
+      "category": "core",
+      "fields": [
+        {
+          "name": "file_id",
+          "type": "String",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
+          "optional": false
+        },
+        {
+          "name": "thumb",
+          "type": "PhotoSize",
+          "description": "Optional. Document thumbnail as defined by sender",
+          "optional": true
+        },
+        {
+          "name": "file_name",
+          "type": "String",
+          "description": "Optional. Original filename as defined by sender",
+          "optional": true
+        },
+        {
+          "name": "mime_type",
+          "type": "String",
+          "description": "Optional. MIME type of the file as defined by sender",
+          "optional": true
+        },
+        {
+          "name": "file_size",
+          "type": "Integer",
+          "description": "Optional. File size",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "Video",
+      "description": "This object represents a video file.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "file_id",
+          "type": "String",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "Integer",
+          "description": "Video width as defined by sender",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "description": "Video height as defined by sender",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "Integer",
+          "description": "Duration of the video in seconds as defined by sender",
+          "optional": false
+        },
+        {
+          "name": "thumb",
+          "type": "PhotoSize",
+          "description": "Optional. Video thumbnail",
+          "optional": true
+        },
+        {
+          "name": "file_name",
+          "type": "String",
+          "description": "Optional. Original filename as defined by sender",
+          "optional": true
+        },
+        {
+          "name": "mime_type",
+          "type": "String",
+          "description": "Optional. Mime type of a file as defined by sender",
           "optional": true
         },
         {
@@ -831,7 +945,13 @@
         {
           "name": "file_id",
           "type": "String",
-          "description": "Unique identifier for this file",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
@@ -850,6 +970,43 @@
           "name": "thumb",
           "type": "PhotoSize",
           "description": "Optional. Video thumbnail",
+          "optional": true
+        },
+        {
+          "name": "file_size",
+          "type": "Integer",
+          "description": "Optional. File size",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "Voice",
+      "description": "This object represents a voice note.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "file_id",
+          "type": "String",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "Integer",
+          "description": "Duration of the audio in seconds as defined by sender",
+          "optional": false
+        },
+        {
+          "name": "mime_type",
+          "type": "String",
+          "description": "Optional. MIME type of the file as defined by sender",
           "optional": true
         },
         {
@@ -898,58 +1055,21 @@
       ]
     },
     {
-      "name": "Location",
-      "description": "This object represents a point on the map.",
+      "name": "Dice",
+      "description": "This object represents an animated emoji that displays a random value.",
       "category": "core",
       "fields": [
         {
-          "name": "longitude",
-          "type": "Float",
-          "description": "Longitude as defined by sender",
-          "optional": false
-        },
-        {
-          "name": "latitude",
-          "type": "Float",
-          "description": "Latitude as defined by sender",
-          "optional": false
-        }
-      ]
-    },
-    {
-      "name": "Venue",
-      "description": "This object represents a venue.",
-      "category": "core",
-      "fields": [
-        {
-          "name": "location",
-          "type": "Location",
-          "description": "Venue location",
-          "optional": false
-        },
-        {
-          "name": "title",
+          "name": "emoji",
           "type": "String",
-          "description": "Name of the venue",
+          "description": "Emoji on which the dice throw animation is based",
           "optional": false
         },
         {
-          "name": "address",
-          "type": "String",
-          "description": "Address of the venue",
+          "name": "value",
+          "type": "Integer",
+          "description": "Value of the dice, 1-6 for “” and “” base emoji, 1-5 for “” and “” base emoji, 1-64 for “” base emoji",
           "optional": false
-        },
-        {
-          "name": "foursquare_id",
-          "type": "String",
-          "description": "Optional. Foursquare identifier of the venue",
-          "optional": true
-        },
-        {
-          "name": "foursquare_type",
-          "type": "String",
-          "description": "Optional. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)",
-          "optional": true
         }
       ]
     },
@@ -968,6 +1088,31 @@
           "name": "voter_count",
           "type": "Integer",
           "description": "Number of users that voted for this option",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "PollAnswer",
+      "description": "This object represents an answer of a user in a non-anonymous poll.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "poll_id",
+          "type": "String",
+          "description": "Unique poll identifier",
+          "optional": false
+        },
+        {
+          "name": "user",
+          "type": "User",
+          "description": "The user, who changed the answer to the poll",
+          "optional": false
+        },
+        {
+          "name": "option_ids",
+          "type": "Array of Integer",
+          "description": "0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.",
           "optional": false
         }
       ]
@@ -996,9 +1141,180 @@
           "optional": false
         },
         {
+          "name": "total_voter_count",
+          "type": "Integer",
+          "description": "Total number of users that voted in the poll",
+          "optional": false
+        },
+        {
           "name": "is_closed",
           "type": "Boolean",
           "description": "True, if the poll is closed",
+          "optional": false
+        },
+        {
+          "name": "is_anonymous",
+          "type": "Boolean",
+          "description": "True, if the poll is anonymous",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "description": "Poll type, currently can be “regular” or “quiz”",
+          "optional": false
+        },
+        {
+          "name": "allows_multiple_answers",
+          "type": "Boolean",
+          "description": "True, if the poll allows multiple answers",
+          "optional": false
+        },
+        {
+          "name": "correct_option_id",
+          "type": "Integer",
+          "description": "Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.",
+          "optional": true
+        },
+        {
+          "name": "explanation",
+          "type": "String",
+          "description": "Optional. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters",
+          "optional": true
+        },
+        {
+          "name": "explanation_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. Special entities like usernames, URLs, bot commands, etc. that appear in the explanation",
+          "optional": true
+        },
+        {
+          "name": "open_period",
+          "type": "Integer",
+          "description": "Optional. Amount of time in seconds the poll will be active after creation",
+          "optional": true
+        },
+        {
+          "name": "close_date",
+          "type": "Integer",
+          "description": "Optional. Point in time (Unix timestamp) when the poll will be automatically closed",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "Location",
+      "description": "This object represents a point on the map.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "longitude",
+          "type": "Float",
+          "description": "Longitude as defined by sender",
+          "optional": false
+        },
+        {
+          "name": "latitude",
+          "type": "Float",
+          "description": "Latitude as defined by sender",
+          "optional": false
+        },
+        {
+          "name": "horizontal_accuracy",
+          "type": "Float number",
+          "description": "Optional. The radius of uncertainty for the location, measured in meters; 0-1500",
+          "optional": true
+        },
+        {
+          "name": "live_period",
+          "type": "Integer",
+          "description": "Optional. Time relative to the message sending date, during which the location can be updated, in seconds. For active live locations only.",
+          "optional": true
+        },
+        {
+          "name": "heading",
+          "type": "Integer",
+          "description": "Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.",
+          "optional": true
+        },
+        {
+          "name": "proximity_alert_radius",
+          "type": "Integer",
+          "description": "Optional. Maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "Venue",
+      "description": "This object represents a venue.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "location",
+          "type": "Location",
+          "description": "Venue location. Can't be a live location",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "description": "Name of the venue",
+          "optional": false
+        },
+        {
+          "name": "address",
+          "type": "String",
+          "description": "Address of the venue",
+          "optional": false
+        },
+        {
+          "name": "foursquare_id",
+          "type": "String",
+          "description": "Optional. Foursquare identifier of the venue",
+          "optional": true
+        },
+        {
+          "name": "foursquare_type",
+          "type": "String",
+          "description": "Optional. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)",
+          "optional": true
+        },
+        {
+          "name": "google_place_id",
+          "type": "String",
+          "description": "Optional. Google Places identifier of the venue",
+          "optional": true
+        },
+        {
+          "name": "google_place_type",
+          "type": "String",
+          "description": "Optional. Google Places type of the venue. (See supported types.)",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "ProximityAlertTriggered",
+      "description": "This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "traveler",
+          "type": "User",
+          "description": "User that triggered the alert",
+          "optional": false
+        },
+        {
+          "name": "watcher",
+          "type": "User",
+          "description": "User that set the alert",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "Integer",
+          "description": "The distance between the users",
           "optional": false
         }
       ]
@@ -1030,7 +1346,13 @@
         {
           "name": "file_id",
           "type": "String",
-          "description": "Unique identifier for this file",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
@@ -1073,14 +1395,14 @@
         {
           "name": "selective",
           "type": "Boolean",
-          "description": "Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.Example: A user requests to change the bot‘s language, bot replies to the request with a keyboard to select the new language. Other users in the group don’t see the keyboard.",
+          "description": "Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.",
           "optional": true
         }
       ]
     },
     {
       "name": "KeyboardButton",
-      "description": "This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields are mutually exclusive.",
+      "description": "This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields request_contact, request_location, and request_poll are mutually exclusive.",
       "category": "core",
       "fields": [
         {
@@ -1099,6 +1421,25 @@
           "name": "request_location",
           "type": "Boolean",
           "description": "Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only",
+          "optional": true
+        },
+        {
+          "name": "request_poll",
+          "type": "KeyboardButtonPollType",
+          "description": "Optional. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "KeyboardButtonPollType",
+      "description": "This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "type",
+          "type": "String",
+          "description": "Optional. If quiz is passed, the user will be allowed to create only polls in the quiz mode. If regular is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.",
           "optional": true
         }
       ]
@@ -1153,6 +1494,12 @@
           "optional": true
         },
         {
+          "name": "login_url",
+          "type": "LoginUrl",
+          "description": "Optional. An HTTP URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget.",
+          "optional": true
+        },
+        {
           "name": "callback_data",
           "type": "String",
           "description": "Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes",
@@ -1161,13 +1508,13 @@
         {
           "name": "switch_inline_query",
           "type": "String",
-          "description": "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot‘s username and the specified inline query in the input field. Can be empty, in which case just the bot’s username will be inserted.Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm… actions – in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.",
+          "description": "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. Can be empty, in which case just the bot's username will be inserted.Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm… actions – in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.",
           "optional": true
         },
         {
           "name": "switch_inline_query_current_chat",
           "type": "String",
-          "description": "Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot’s username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.",
+          "description": "Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. Can be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.",
           "optional": true
         },
         {
@@ -1180,6 +1527,37 @@
           "name": "pay",
           "type": "Boolean",
           "description": "Optional. Specify True, to send a Pay button.NOTE: This type of button must always be the first button in the first row.",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "LoginUrl",
+      "description": "\nSample bot: @discussbot\n\nTelegram apps support these buttons as of version 5.7.\n\n  \n\nThis object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the Telegram Login Widget when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:",
+      "category": "core",
+      "fields": [
+        {
+          "name": "url",
+          "type": "String",
+          "description": "An HTTP URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.NOTE: You must always check the hash of the received data to verify the authentication and the integrity of the data as described in Checking authorization.",
+          "optional": false
+        },
+        {
+          "name": "forward_text",
+          "type": "String",
+          "description": "Optional. New text of the button in forwarded messages.",
+          "optional": true
+        },
+        {
+          "name": "bot_username",
+          "type": "String",
+          "description": "Optional. Username of a bot, which will be used for user authorization. See Setting up a bot for more details. If not specified, the current bot's username will be assumed. The url's domain must be the same as the domain linked with the bot. See Linking your domain to the bot for more details.",
+          "optional": true
+        },
+        {
+          "name": "request_write_access",
+          "type": "Boolean",
+          "description": "Optional. Pass True to request the permission for your bot to send messages to the user.",
           "optional": true
         }
       ]
@@ -1235,13 +1613,13 @@
     },
     {
       "name": "ForceReply",
-      "description": "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.",
+      "description": "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.",
       "category": "core",
       "fields": [
         {
           "name": "force_reply",
           "type": "True",
-          "description": "Shows reply interface to the user, as if they manually selected the bot‘s message and tapped ’Reply'",
+          "description": "Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'",
           "optional": false
         },
         {
@@ -1260,13 +1638,25 @@
         {
           "name": "small_file_id",
           "type": "String",
-          "description": "Unique file identifier of small (160x160) chat photo. This file_id can be used only for photo download.",
+          "description": "File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.",
+          "optional": false
+        },
+        {
+          "name": "small_file_unique_id",
+          "type": "String",
+          "description": "Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
           "name": "big_file_id",
           "type": "String",
-          "description": "Unique file identifier of big (640x640) chat photo. This file_id can be used only for photo download.",
+          "description": "File identifier of big (640x640) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.",
+          "optional": false
+        },
+        {
+          "name": "big_file_unique_id",
+          "type": "String",
+          "description": "Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         }
       ]
@@ -1289,9 +1679,15 @@
           "optional": false
         },
         {
-          "name": "until_date",
-          "type": "Integer",
-          "description": "Optional. Restricted and kicked only. Date when restrictions will be lifted for this user, unix time",
+          "name": "custom_title",
+          "type": "String",
+          "description": "Optional. Owner and administrators only. Custom title for this user",
+          "optional": true
+        },
+        {
+          "name": "is_anonymous",
+          "type": "Boolean",
+          "description": "Optional. Owner and administrators only. True, if the user's presence in the chat is hidden",
           "optional": true
         },
         {
@@ -1301,21 +1697,15 @@
           "optional": true
         },
         {
-          "name": "can_change_info",
-          "type": "Boolean",
-          "description": "Optional. Administrators only. True, if the administrator can change the chat title, photo and other settings",
-          "optional": true
-        },
-        {
           "name": "can_post_messages",
           "type": "Boolean",
-          "description": "Optional. Administrators only. True, if the administrator can post in the channel, channels only",
+          "description": "Optional. Administrators only. True, if the administrator can post in the channel; channels only",
           "optional": true
         },
         {
           "name": "can_edit_messages",
           "type": "Boolean",
-          "description": "Optional. Administrators only. True, if the administrator can edit messages of other users and can pin messages, channels only",
+          "description": "Optional. Administrators only. True, if the administrator can edit messages of other users and can pin messages; channels only",
           "optional": true
         },
         {
@@ -1325,27 +1715,33 @@
           "optional": true
         },
         {
-          "name": "can_invite_users",
-          "type": "Boolean",
-          "description": "Optional. Administrators only. True, if the administrator can invite new users to the chat",
-          "optional": true
-        },
-        {
           "name": "can_restrict_members",
           "type": "Boolean",
           "description": "Optional. Administrators only. True, if the administrator can restrict, ban or unban chat members",
           "optional": true
         },
         {
-          "name": "can_pin_messages",
+          "name": "can_promote_members",
           "type": "Boolean",
-          "description": "Optional. Administrators only. True, if the administrator can pin messages, groups and supergroups only",
+          "description": "Optional. Administrators only. True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)",
           "optional": true
         },
         {
-          "name": "can_promote_members",
+          "name": "can_change_info",
           "type": "Boolean",
-          "description": "Optional. Administrators only. True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)",
+          "description": "Optional. Administrators and restricted only. True, if the user is allowed to change the chat title, photo and other settings",
+          "optional": true
+        },
+        {
+          "name": "can_invite_users",
+          "type": "Boolean",
+          "description": "Optional. Administrators and restricted only. True, if the user is allowed to invite new users to the chat",
+          "optional": true
+        },
+        {
+          "name": "can_pin_messages",
+          "type": "Boolean",
+          "description": "Optional. Administrators and restricted only. True, if the user is allowed to pin messages; groups and supergroups only",
           "optional": true
         },
         {
@@ -1357,26 +1753,131 @@
         {
           "name": "can_send_messages",
           "type": "Boolean",
-          "description": "Optional. Restricted only. True, if the user can send text messages, contacts, locations and venues",
+          "description": "Optional. Restricted only. True, if the user is allowed to send text messages, contacts, locations and venues",
           "optional": true
         },
         {
           "name": "can_send_media_messages",
           "type": "Boolean",
-          "description": "Optional. Restricted only. True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages",
+          "description": "Optional. Restricted only. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes",
+          "optional": true
+        },
+        {
+          "name": "can_send_polls",
+          "type": "Boolean",
+          "description": "Optional. Restricted only. True, if the user is allowed to send polls",
           "optional": true
         },
         {
           "name": "can_send_other_messages",
           "type": "Boolean",
-          "description": "Optional. Restricted only. True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages",
+          "description": "Optional. Restricted only. True, if the user is allowed to send animations, games, stickers and use inline bots",
           "optional": true
         },
         {
           "name": "can_add_web_page_previews",
           "type": "Boolean",
-          "description": "Optional. Restricted only. True, if user may add web page previews to his messages, implies can_send_media_messages",
+          "description": "Optional. Restricted only. True, if the user is allowed to add web page previews to their messages",
           "optional": true
+        },
+        {
+          "name": "until_date",
+          "type": "Integer",
+          "description": "Optional. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "ChatPermissions",
+      "description": "Describes actions that a non-administrator user is allowed to take in a chat.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "can_send_messages",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to send text messages, contacts, locations and venues",
+          "optional": true
+        },
+        {
+          "name": "can_send_media_messages",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages",
+          "optional": true
+        },
+        {
+          "name": "can_send_polls",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to send polls, implies can_send_messages",
+          "optional": true
+        },
+        {
+          "name": "can_send_other_messages",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to send animations, games, stickers and use inline bots, implies can_send_media_messages",
+          "optional": true
+        },
+        {
+          "name": "can_add_web_page_previews",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to add web page previews to their messages, implies can_send_media_messages",
+          "optional": true
+        },
+        {
+          "name": "can_change_info",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups",
+          "optional": true
+        },
+        {
+          "name": "can_invite_users",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to invite new users to the chat",
+          "optional": true
+        },
+        {
+          "name": "can_pin_messages",
+          "type": "Boolean",
+          "description": "Optional. True, if the user is allowed to pin messages. Ignored in public supergroups",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "ChatLocation",
+      "description": "Represents a location to which a chat is connected.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "location",
+          "type": "Location",
+          "description": "The location to which the supergroup is connected. Can't be a live location.",
+          "optional": false
+        },
+        {
+          "name": "address",
+          "type": "String",
+          "description": "Location address; 1-64 characters, as defined by the chat owner",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "BotCommand",
+      "description": "This object represents a bot command.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "command",
+          "type": "String",
+          "description": "Text of the command, 1-32 characters. Can contain only lowercase English letters, digits and underscores.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "description": "Description of the command, 3-256 characters.",
+          "optional": false
         }
       ]
     },
@@ -1419,13 +1920,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the photo to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the photo caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         }
       ]
@@ -1450,19 +1957,25 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the video to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the video to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the video caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -1511,19 +2024,25 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the animation to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the animation to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the animation caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -1566,19 +2085,25 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the audio to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the audio to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the audio caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -1621,19 +2146,31 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the document to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the document to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the document caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
+          "optional": true
+        },
+        {
+          "name": "disable_content_type_detection",
+          "type": "Boolean",
+          "description": "Optional. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always true, if the document is sent as part of an album.",
           "optional": true
         }
       ]
@@ -1646,7 +2183,13 @@
         {
           "name": "file_id",
           "type": "String",
-          "description": "Unique identifier for this file",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
@@ -1662,9 +2205,15 @@
           "optional": false
         },
         {
+          "name": "is_animated",
+          "type": "Boolean",
+          "description": "True, if the sticker is animated",
+          "optional": false
+        },
+        {
           "name": "thumb",
           "type": "PhotoSize",
-          "description": "Optional. Sticker thumbnail in the .webp or .jpg format",
+          "description": "Optional. Sticker thumbnail in the .WEBP or .JPG format",
           "optional": true
         },
         {
@@ -1711,6 +2260,12 @@
           "optional": false
         },
         {
+          "name": "is_animated",
+          "type": "Boolean",
+          "description": "True, if the sticker set contains animated stickers",
+          "optional": false
+        },
+        {
           "name": "contains_masks",
           "type": "Boolean",
           "description": "True, if the sticker set contains masks",
@@ -1721,6 +2276,12 @@
           "type": "Array of Sticker",
           "description": "List of all set stickers",
           "optional": false
+        },
+        {
+          "name": "thumb",
+          "type": "PhotoSize",
+          "description": "Optional. Sticker set thumbnail in the .WEBP or .TGS format",
+          "optional": true
         }
       ]
     },
@@ -1781,7 +2342,7 @@
         {
           "name": "query",
           "type": "String",
-          "description": "Text of the query (up to 512 characters)",
+          "description": "Text of the query (up to 256 characters)",
           "optional": false
         },
         {
@@ -1921,13 +2482,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the photo to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the photo caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -1988,8 +2555,14 @@
         {
           "name": "thumb_url",
           "type": "String",
-          "description": "URL of the static thumbnail for the result (jpeg or gif)",
+          "description": "URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result",
           "optional": false
+        },
+        {
+          "name": "thumb_mime_type",
+          "type": "String",
+          "description": "Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”",
+          "optional": true
         },
         {
           "name": "title",
@@ -2000,13 +2573,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the GIF file to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2067,8 +2646,14 @@
         {
           "name": "thumb_url",
           "type": "String",
-          "description": "URL of the static thumbnail (jpeg or gif) for the result",
+          "description": "URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result",
           "optional": false
+        },
+        {
+          "name": "thumb_mime_type",
+          "type": "String",
+          "description": "Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”",
+          "optional": true
         },
         {
           "name": "title",
@@ -2079,13 +2664,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2146,13 +2737,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the video to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the video to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the video caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2195,7 +2792,7 @@
     },
     {
       "name": "InlineQueryResultAudio",
-      "description": "Represents a link to an mp3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.",
+      "description": "Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.",
       "category": "inline",
       "fields": [
         {
@@ -2225,13 +2822,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption, 0-1024 characters",
+          "description": "Optional. Caption, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the audio caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2262,7 +2865,7 @@
     },
     {
       "name": "InlineQueryResultVoice",
-      "description": "Represents a link to a voice recording in an .ogg container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message.",
+      "description": "Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message.",
       "category": "inline",
       "fields": [
         {
@@ -2292,13 +2895,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption, 0-1024 characters",
+          "description": "Optional. Caption, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the voice message caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2347,13 +2956,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the document to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the document to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the document caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2442,9 +3057,27 @@
           "optional": false
         },
         {
+          "name": "horizontal_accuracy",
+          "type": "Float number",
+          "description": "Optional. The radius of uncertainty for the location, measured in meters; 0-1500",
+          "optional": true
+        },
+        {
           "name": "live_period",
           "type": "Integer",
           "description": "Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.",
+          "optional": true
+        },
+        {
+          "name": "heading",
+          "type": "Integer",
+          "description": "Optional. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.",
+          "optional": true
+        },
+        {
+          "name": "proximity_alert_radius",
+          "type": "Integer",
+          "description": "Optional. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
           "optional": true
         },
         {
@@ -2530,6 +3163,18 @@
           "name": "foursquare_type",
           "type": "String",
           "description": "Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)",
+          "optional": true
+        },
+        {
+          "name": "google_place_id",
+          "type": "String",
+          "description": "Optional. Google Places identifier of the venue",
+          "optional": true
+        },
+        {
+          "name": "google_place_type",
+          "type": "String",
+          "description": "Optional. Google Places type of the venue. (See supported types.)",
           "optional": true
         },
         {
@@ -2706,13 +3351,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the photo to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the photo caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2761,13 +3412,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the GIF file to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2816,13 +3473,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2914,13 +3577,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the document to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the document to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the document caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -2975,13 +3644,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption of the video to be sent, 0-1024 characters",
+          "description": "Optional. Caption of the video to be sent, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the video caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -3030,13 +3705,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption, 0-1024 characters",
+          "description": "Optional. Caption, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the voice message caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -3055,7 +3736,7 @@
     },
     {
       "name": "InlineQueryResultCachedAudio",
-      "description": "Represents a link to an mp3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.",
+      "description": "Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio.",
       "category": "inline",
       "fields": [
         {
@@ -3079,13 +3760,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Optional. Caption, 0-1024 characters",
+          "description": "Optional. Caption, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Optional. Mode for parsing entities in the audio caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -3116,7 +3803,13 @@
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.",
+          "description": "Optional. Mode for parsing entities in the message text. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "entities",
+          "type": "Array of MessageEntity",
+          "description": "Optional. List of special entities that appear in message text, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -3145,9 +3838,27 @@
           "optional": false
         },
         {
+          "name": "horizontal_accuracy",
+          "type": "Float number",
+          "description": "Optional. The radius of uncertainty for the location, measured in meters; 0-1500",
+          "optional": true
+        },
+        {
           "name": "live_period",
           "type": "Integer",
           "description": "Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.",
+          "optional": true
+        },
+        {
+          "name": "heading",
+          "type": "Integer",
+          "description": "Optional. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.",
+          "optional": true
+        },
+        {
+          "name": "proximity_alert_radius",
+          "type": "Integer",
+          "description": "Optional. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
           "optional": true
         }
       ]
@@ -3191,6 +3902,18 @@
           "name": "foursquare_type",
           "type": "String",
           "description": "Optional. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)",
+          "optional": true
+        },
+        {
+          "name": "google_place_id",
+          "type": "String",
+          "description": "Optional. Google Places identifier of the venue",
+          "optional": true
+        },
+        {
+          "name": "google_place_type",
+          "type": "String",
+          "description": "Optional. Google Places type of the venue. (See supported types.)",
           "optional": true
         }
       ]
@@ -3574,7 +4297,13 @@
         {
           "name": "file_id",
           "type": "String",
-          "description": "Unique identifier for this file",
+          "description": "Identifier for this file, which can be used to download or reuse the file",
+          "optional": false
+        },
+        {
+          "name": "file_unique_id",
+          "type": "String",
+          "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.",
           "optional": false
         },
         {
@@ -4052,7 +4781,7 @@
         {
           "name": "limit",
           "type": "Integer",
-          "description": "Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100.",
+          "description": "Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.",
           "optional": true
         },
         {
@@ -4064,14 +4793,14 @@
         {
           "name": "allowed_updates",
           "type": "Array of String",
-          "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.",
+          "description": "A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.",
           "optional": true
         }
       ]
     },
     {
       "name": "setWebhook",
-      "description": "If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.\nUse this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.",
+      "description": "If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot's token, you can be pretty sure it's us.\nUse this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -4087,15 +4816,40 @@
           "optional": true
         },
         {
+          "name": "ip_address",
+          "type": "String",
+          "description": "The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS",
+          "optional": true
+        },
+        {
           "name": "max_connections",
           "type": "Integer",
-          "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput.",
+          "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.",
           "optional": true
         },
         {
           "name": "allowed_updates",
           "type": "Array of String",
-          "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.",
+          "description": "A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.",
+          "optional": true
+        },
+        {
+          "name": "drop_pending_updates",
+          "type": "Boolean",
+          "description": "Pass True to drop all pending updates",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "deleteWebhook",
+      "description": "Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "drop_pending_updates",
+          "type": "Boolean",
+          "description": "Pass True to drop all pending updates",
           "optional": true
         }
       ]
@@ -4114,13 +4868,19 @@
         {
           "name": "text",
           "type": "String",
-          "description": "Text of the message to be sent",
+          "description": "Text of the message to be sent, 1-4096 characters after entities parsing",
           "optional": false
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.",
+          "description": "Mode for parsing entities in the message text. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in message text, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -4139,6 +4899,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -4181,8 +4947,8 @@
       ]
     },
     {
-      "name": "sendPhoto",
-      "description": "Use this method to send photos. On success, the sent Message is returned.",
+      "name": "copyMessage",
+      "description": "Use this method to copy messages of any kind. The method is analogous to the method forwardMessages, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.",
       "category": "core",
       "fields": [
         {
@@ -4192,21 +4958,33 @@
           "optional": false
         },
         {
-          "name": "photo",
-          "type": "InputFile or String",
-          "description": "Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files »",
+          "name": "from_chat_id",
+          "type": "Integer or String",
+          "description": "Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)",
+          "optional": false
+        },
+        {
+          "name": "message_id",
+          "type": "Integer",
+          "description": "Message identifier in the chat specified in from_chat_id",
           "optional": false
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Photo caption (may also be used when resending photos by file_id), 0-1024 characters",
+          "description": "New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Mode for parsing entities in the new caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the new caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -4222,6 +5000,73 @@
           "optional": true
         },
         {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
+          "name": "reply_markup",
+          "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
+          "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "sendPhoto",
+      "description": "Use this method to send photos. On success, the sent Message is returned.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "chat_id",
+          "type": "Integer or String",
+          "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "optional": false
+        },
+        {
+          "name": "photo",
+          "type": "InputFile or String",
+          "description": "Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. More info on Sending Files »",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "String",
+          "description": "Photo caption (may also be used when resending photos by file_id), 0-1024 characters after entities parsing",
+          "optional": true
+        },
+        {
+          "name": "parse_mode",
+          "type": "String",
+          "description": "Mode for parsing entities in the photo caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the caption, which can be specified instead of parse_mode",
+          "optional": true
+        },
+        {
+          "name": "disable_notification",
+          "type": "Boolean",
+          "description": "Sends the message silently. Users will receive a notification with no sound.",
+          "optional": true
+        },
+        {
+          "name": "reply_to_message_id",
+          "type": "Integer",
+          "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
           "name": "reply_markup",
           "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
           "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
@@ -4231,7 +5076,7 @@
     },
     {
       "name": "sendAudio",
-      "description": "For sending voice messages, use the sendVoice method instead.\nUse this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.",
+      "description": "For sending voice messages, use the sendVoice method instead.\nUse this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.",
       "category": "core",
       "fields": [
         {
@@ -4249,13 +5094,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Audio caption, 0-1024 characters",
+          "description": "Audio caption, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Mode for parsing entities in the audio caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -4279,7 +5130,7 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
@@ -4292,6 +5143,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -4322,19 +5179,31 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Document caption (may also be used when resending documents by file_id), 0-1024 characters",
+          "description": "Document caption (may also be used when resending documents by file_id), 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Mode for parsing entities in the document caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the caption, which can be specified instead of parse_mode",
+          "optional": true
+        },
+        {
+          "name": "disable_content_type_detection",
+          "type": "Boolean",
+          "description": "Disables automatic server-side content type detection for files uploaded using multipart/form-data",
           "optional": true
         },
         {
@@ -4347,6 +5216,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -4395,19 +5270,25 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Video caption (may also be used when resending videos by file_id), 0-1024 characters",
+          "description": "Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Mode for parsing entities in the video caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -4426,6 +5307,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -4474,19 +5361,25 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
           "name": "caption",
           "type": "String",
-          "description": "Animation caption (may also be used when resending animation by file_id), 0-1024 characters",
+          "description": "Animation caption (may also be used when resending animation by file_id), 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Mode for parsing entities in the animation caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -4502,6 +5395,12 @@
           "optional": true
         },
         {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
           "name": "reply_markup",
           "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
           "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
@@ -4511,7 +5410,7 @@
     },
     {
       "name": "sendVoice",
-      "description": "Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.",
+      "description": "Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.",
       "category": "core",
       "fields": [
         {
@@ -4529,13 +5428,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "Voice message caption, 0-1024 characters",
+          "description": "Voice message caption, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Mode for parsing entities in the voice message caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -4554,6 +5459,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -4596,7 +5507,7 @@
         {
           "name": "thumb",
           "type": "InputFile or String",
-          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+          "description": "Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
           "optional": true
         },
         {
@@ -4612,6 +5523,12 @@
           "optional": true
         },
         {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
           "name": "reply_markup",
           "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
           "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
@@ -4621,7 +5538,7 @@
     },
     {
       "name": "sendMediaGroup",
-      "description": "Use this method to send a group of photos or videos as an album. On success, an array of the sent Messages is returned.",
+      "description": "Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.",
       "category": "core",
       "fields": [
         {
@@ -4632,20 +5549,26 @@
         },
         {
           "name": "media",
-          "type": "Array of InputMediaPhoto and InputMediaVideo",
-          "description": "A JSON-serialized array describing photos and videos to be sent, must include 2–10 items",
+          "type": "Array of InputMediaAudio, InputMediaDocument, InputMediaPhoto and InputMediaVideo",
+          "description": "A JSON-serialized array describing messages to be sent, must include 2-10 items",
           "optional": false
         },
         {
           "name": "disable_notification",
           "type": "Boolean",
-          "description": "Sends the messages silently. Users will receive a notification with no sound.",
+          "description": "Sends messages silently. Users will receive a notification with no sound.",
           "optional": true
         },
         {
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the messages are a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         }
       ]
@@ -4674,9 +5597,27 @@
           "optional": false
         },
         {
+          "name": "horizontal_accuracy",
+          "type": "Float number",
+          "description": "The radius of uncertainty for the location, measured in meters; 0-1500",
+          "optional": true
+        },
+        {
           "name": "live_period",
           "type": "Integer",
           "description": "Period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400.",
+          "optional": true
+        },
+        {
+          "name": "heading",
+          "type": "Integer",
+          "description": "For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.",
+          "optional": true
+        },
+        {
+          "name": "proximity_alert_radius",
+          "type": "Integer",
+          "description": "For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
           "optional": true
         },
         {
@@ -4692,6 +5633,12 @@
           "optional": true
         },
         {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
           "name": "reply_markup",
           "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
           "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
@@ -4701,7 +5648,7 @@
     },
     {
       "name": "editMessageLiveLocation",
-      "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.",
+      "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
       "category": "core",
       "fields": [
         {
@@ -4733,6 +5680,24 @@
           "type": "Float number",
           "description": "Longitude of new location",
           "optional": false
+        },
+        {
+          "name": "horizontal_accuracy",
+          "type": "Float number",
+          "description": "The radius of uncertainty for the location, measured in meters; 0-1500",
+          "optional": true
+        },
+        {
+          "name": "heading",
+          "type": "Integer",
+          "description": "Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.",
+          "optional": true
+        },
+        {
+          "name": "proximity_alert_radius",
+          "type": "Integer",
+          "description": "Maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
+          "optional": true
         },
         {
           "name": "reply_markup",
@@ -4821,6 +5786,18 @@
           "optional": true
         },
         {
+          "name": "google_place_id",
+          "type": "String",
+          "description": "Google Places identifier of the venue",
+          "optional": true
+        },
+        {
+          "name": "google_place_type",
+          "type": "String",
+          "description": "Google Places type of the venue. (See supported types.)",
+          "optional": true
+        },
+        {
           "name": "disable_notification",
           "type": "Boolean",
           "description": "Sends the message silently. Users will receive a notification with no sound.",
@@ -4830,6 +5807,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -4888,6 +5871,12 @@
           "optional": true
         },
         {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
           "name": "reply_markup",
           "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
           "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user.",
@@ -4897,26 +5886,86 @@
     },
     {
       "name": "sendPoll",
-      "description": "Use this method to send a native poll. A native poll can't be sent to a private chat. On success, the sent Message is returned.",
+      "description": "Use this method to send a native poll. On success, the sent Message is returned.",
       "category": "core",
       "fields": [
         {
           "name": "chat_id",
           "type": "Integer or String",
-          "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername). A native poll can't be sent to a private chat.",
+          "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
           "optional": false
         },
         {
           "name": "question",
           "type": "String",
-          "description": "Poll question, 1-255 characters",
+          "description": "Poll question, 1-300 characters",
           "optional": false
         },
         {
           "name": "options",
           "type": "Array of String",
-          "description": "List of answer options, 2-10 strings 1-100 characters each",
+          "description": "A JSON-serialized list of answer options, 2-10 strings 1-100 characters each",
           "optional": false
+        },
+        {
+          "name": "is_anonymous",
+          "type": "Boolean",
+          "description": "True, if the poll needs to be anonymous, defaults to True",
+          "optional": true
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "description": "Poll type, “quiz” or “regular”, defaults to “regular”",
+          "optional": true
+        },
+        {
+          "name": "allows_multiple_answers",
+          "type": "Boolean",
+          "description": "True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False",
+          "optional": true
+        },
+        {
+          "name": "correct_option_id",
+          "type": "Integer",
+          "description": "0-based identifier of the correct answer option, required for polls in quiz mode",
+          "optional": true
+        },
+        {
+          "name": "explanation",
+          "type": "String",
+          "description": "Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing",
+          "optional": true
+        },
+        {
+          "name": "explanation_parse_mode",
+          "type": "String",
+          "description": "Mode for parsing entities in the explanation. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "explanation_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the poll explanation, which can be specified instead of parse_mode",
+          "optional": true
+        },
+        {
+          "name": "open_period",
+          "type": "Integer",
+          "description": "Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.",
+          "optional": true
+        },
+        {
+          "name": "close_date",
+          "type": "Integer",
+          "description": "Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.",
+          "optional": true
+        },
+        {
+          "name": "is_closed",
+          "type": "Boolean",
+          "description": "Pass True, if the poll needs to be immediately closed. This can be useful for poll preview.",
+          "optional": true
         },
         {
           "name": "disable_notification",
@@ -4928,6 +5977,55 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
+          "name": "reply_markup",
+          "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
+          "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "sendDice",
+      "description": "Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "chat_id",
+          "type": "Integer or String",
+          "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "optional": false
+        },
+        {
+          "name": "emoji",
+          "type": "String",
+          "description": "Emoji on which the dice throw animation is based. Currently, must be one of “”, “”, “”, “”, or “”. Dice can have values 1-6 for “” and “”, values 1-5 for “” and “”, and values 1-64 for “”. Defaults to “”",
+          "optional": true
+        },
+        {
+          "name": "disable_notification",
+          "type": "Boolean",
+          "description": "Sends the message silently. Users will receive a notification with no sound.",
+          "optional": true
+        },
+        {
+          "name": "reply_to_message_id",
+          "type": "Integer",
+          "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -4952,7 +6050,7 @@
         {
           "name": "action",
           "type": "String",
-          "description": "Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.",
+          "description": "Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.",
           "optional": false
         }
       ]
@@ -4977,7 +6075,7 @@
         {
           "name": "limit",
           "type": "Integer",
-          "description": "Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100.",
+          "description": "Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.",
           "optional": true
         }
       ]
@@ -4997,7 +6095,7 @@
     },
     {
       "name": "kickChatMember",
-      "description": "\nNote: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group. Otherwise members may only be removed by the group's creator or by the member that added them.\n\nUse this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
+      "description": "Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5022,7 +6120,7 @@
     },
     {
       "name": "unbanChatMember",
-      "description": "Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns True on success.",
+      "description": "Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be removed from the chat. If you don't want this, use the parameter only_if_banned. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5036,12 +6134,18 @@
           "type": "Integer",
           "description": "Unique identifier of the target user",
           "optional": false
+        },
+        {
+          "name": "only_if_banned",
+          "type": "Boolean",
+          "description": "Do nothing if the user is not banned",
+          "optional": true
         }
       ]
     },
     {
       "name": "restrictChatMember",
-      "description": "Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions from a user. Returns True on success.",
+      "description": "Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5057,33 +6161,15 @@
           "optional": false
         },
         {
+          "name": "permissions",
+          "type": "ChatPermissions",
+          "description": "A JSON-serialized object for new user permissions",
+          "optional": false
+        },
+        {
           "name": "until_date",
           "type": "Integer",
           "description": "Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever",
-          "optional": true
-        },
-        {
-          "name": "can_send_messages",
-          "type": "Boolean",
-          "description": "Pass True, if the user can send text messages, contacts, locations and venues",
-          "optional": true
-        },
-        {
-          "name": "can_send_media_messages",
-          "type": "Boolean",
-          "description": "Pass True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages",
-          "optional": true
-        },
-        {
-          "name": "can_send_other_messages",
-          "type": "Boolean",
-          "description": "Pass True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages",
-          "optional": true
-        },
-        {
-          "name": "can_add_web_page_previews",
-          "type": "Boolean",
-          "description": "Pass True, if the user may add web page previews to their messages, implies can_send_media_messages",
           "optional": true
         }
       ]
@@ -5104,6 +6190,12 @@
           "type": "Integer",
           "description": "Unique identifier of the target user",
           "optional": false
+        },
+        {
+          "name": "is_anonymous",
+          "type": "Boolean",
+          "description": "Pass True, if the administrator's presence in the chat is hidden",
+          "optional": true
         },
         {
           "name": "can_change_info",
@@ -5150,8 +6242,52 @@
         {
           "name": "can_promote_members",
           "type": "Boolean",
-          "description": "Pass True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)",
+          "description": "Pass True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)",
           "optional": true
+        }
+      ]
+    },
+    {
+      "name": "setChatAdministratorCustomTitle",
+      "description": "Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "chat_id",
+          "type": "Integer or String",
+          "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "optional": false
+        },
+        {
+          "name": "user_id",
+          "type": "Integer",
+          "description": "Unique identifier of the target user",
+          "optional": false
+        },
+        {
+          "name": "custom_title",
+          "type": "String",
+          "description": "New custom title for the administrator; 0-16 characters, emoji are not allowed",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "name": "setChatPermissions",
+      "description": "Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members admin rights. Returns True on success.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "chat_id",
+          "type": "Integer or String",
+          "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+          "optional": false
+        },
+        {
+          "name": "permissions",
+          "type": "ChatPermissions",
+          "description": "New default chat permissions",
+          "optional": false
         }
       ]
     },
@@ -5170,7 +6306,7 @@
     },
     {
       "name": "setChatPhoto",
-      "description": "\nNote: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.\n\nUse this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
+      "description": "Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5189,7 +6325,7 @@
     },
     {
       "name": "deleteChatPhoto",
-      "description": "\nNote: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.\n\nUse this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
+      "description": "Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5202,7 +6338,7 @@
     },
     {
       "name": "setChatTitle",
-      "description": "\nNote: In regular groups (non-supergroups), this method will only work if the ‘All Members Are Admins’ setting is off in the target group.\n\nUse this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
+      "description": "Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5221,7 +6357,7 @@
     },
     {
       "name": "setChatDescription",
-      "description": "Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
+      "description": "Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5240,7 +6376,7 @@
     },
     {
       "name": "pinChatMessage",
-      "description": "Use this method to pin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.",
+      "description": "Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5258,14 +6394,33 @@
         {
           "name": "disable_notification",
           "type": "Boolean",
-          "description": "Pass True, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels.",
+          "description": "Pass True, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.",
           "optional": true
         }
       ]
     },
     {
       "name": "unpinChatMessage",
-      "description": "Use this method to unpin a message in a group, a supergroup, or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.",
+      "description": "Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "chat_id",
+          "type": "Integer or String",
+          "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+          "optional": false
+        },
+        {
+          "name": "message_id",
+          "type": "Integer",
+          "description": "Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "unpinAllChatMessages",
+      "description": "Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5405,7 +6560,7 @@
         {
           "name": "url",
           "type": "String",
-          "description": "URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game – note that this will only work if the query comes from a callback_game button.Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.",
+          "description": "URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game — note that this will only work if the query comes from a callback_game button.Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.",
           "optional": true
         },
         {
@@ -5417,8 +6572,21 @@
       ]
     },
     {
+      "name": "setMyCommands",
+      "description": "Use this method to change the list of the bot's commands. Returns True on success.",
+      "category": "core",
+      "fields": [
+        {
+          "name": "commands",
+          "type": "Array of BotCommand",
+          "description": "A JSON-serialized list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.",
+          "optional": false
+        }
+      ]
+    },
+    {
       "name": "editMessageText",
-      "description": "Use this method to edit text and game messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.",
+      "description": "Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
       "category": "core",
       "fields": [
         {
@@ -5442,13 +6610,19 @@
         {
           "name": "text",
           "type": "String",
-          "description": "New text of the message",
+          "description": "New text of the message, 1-4096 characters after entities parsing",
           "optional": false
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.",
+          "description": "Mode for parsing entities in the message text. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in message text, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -5467,7 +6641,7 @@
     },
     {
       "name": "editMessageCaption",
-      "description": "Use this method to edit captions of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.",
+      "description": "Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
       "category": "core",
       "fields": [
         {
@@ -5491,13 +6665,19 @@
         {
           "name": "caption",
           "type": "String",
-          "description": "New caption of the message",
+          "description": "New caption of the message, 0-1024 characters after entities parsing",
           "optional": true
         },
         {
           "name": "parse_mode",
           "type": "String",
-          "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption.",
+          "description": "Mode for parsing entities in the message caption. See formatting options for more details.",
+          "optional": true
+        },
+        {
+          "name": "caption_entities",
+          "type": "Array of MessageEntity",
+          "description": "List of special entities that appear in the caption, which can be specified instead of parse_mode",
           "optional": true
         },
         {
@@ -5510,7 +6690,7 @@
     },
     {
       "name": "editMessageMedia",
-      "description": "Use this method to edit animation, audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.",
+      "description": "Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded. Use a previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.",
       "category": "core",
       "fields": [
         {
@@ -5547,7 +6727,7 @@
     },
     {
       "name": "editMessageReplyMarkup",
-      "description": "Use this method to edit only the reply markup of messages. On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.",
+      "description": "Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
       "category": "core",
       "fields": [
         {
@@ -5603,7 +6783,7 @@
     },
     {
       "name": "deleteMessage",
-      "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.",
+      "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.",
       "category": "core",
       "fields": [
         {
@@ -5622,7 +6802,7 @@
     },
     {
       "name": "sendSticker",
-      "description": "Use this method to send .webp stickers. On success, the sent Message is returned.",
+      "description": "Use this method to send static .WEBP or animated .TGS stickers. On success, the sent Message is returned.",
       "category": "stickers",
       "fields": [
         {
@@ -5634,7 +6814,7 @@
         {
           "name": "sticker",
           "type": "InputFile or String",
-          "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+          "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
           "optional": false
         },
         {
@@ -5647,6 +6827,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -5672,7 +6858,7 @@
     },
     {
       "name": "uploadStickerFile",
-      "description": "Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.",
+      "description": "Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.",
       "category": "stickers",
       "fields": [
         {
@@ -5684,14 +6870,14 @@
         {
           "name": "png_sticker",
           "type": "InputFile",
-          "description": "Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »",
+          "description": "PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »",
           "optional": false
         }
       ]
     },
     {
       "name": "createNewStickerSet",
-      "description": "Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns True on success.",
+      "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker or tgs_sticker. Returns True on success.",
       "category": "stickers",
       "fields": [
         {
@@ -5715,8 +6901,14 @@
         {
           "name": "png_sticker",
           "type": "InputFile or String",
-          "description": "Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
-          "optional": false
+          "description": "PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+          "optional": true
+        },
+        {
+          "name": "tgs_sticker",
+          "type": "InputFile",
+          "description": "TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements",
+          "optional": true
         },
         {
           "name": "emojis",
@@ -5740,7 +6932,7 @@
     },
     {
       "name": "addStickerToSet",
-      "description": "Use this method to add a new sticker to a set created by the bot. Returns True on success.",
+      "description": "Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker or tgs_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
       "category": "stickers",
       "fields": [
         {
@@ -5758,8 +6950,14 @@
         {
           "name": "png_sticker",
           "type": "InputFile or String",
-          "description": "Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
-          "optional": false
+          "description": "PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+          "optional": true
+        },
+        {
+          "name": "tgs_sticker",
+          "type": "InputFile",
+          "description": "TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/animated_stickers#technical-requirements for technical requirements",
+          "optional": true
         },
         {
           "name": "emojis",
@@ -5777,7 +6975,7 @@
     },
     {
       "name": "setStickerPositionInSet",
-      "description": "Use this method to move a sticker in a set created by the bot to a specific position . Returns True on success.",
+      "description": "Use this method to move a sticker in a set created by the bot to a specific position. Returns True on success.",
       "category": "stickers",
       "fields": [
         {
@@ -5804,6 +7002,31 @@
           "type": "String",
           "description": "File identifier of the sticker",
           "optional": false
+        }
+      ]
+    },
+    {
+      "name": "setStickerSetThumb",
+      "description": "Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Returns True on success.",
+      "category": "stickers",
+      "fields": [
+        {
+          "name": "name",
+          "type": "String",
+          "description": "Sticker set name",
+          "optional": false
+        },
+        {
+          "name": "user_id",
+          "type": "Integer",
+          "description": "User identifier of the sticker set owner",
+          "optional": false
+        },
+        {
+          "name": "thumb",
+          "type": "InputFile or String",
+          "description": "A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/animated_stickers#technical-requirements for animated sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files ». Animated sticker set thumbnail can't be uploaded via HTTP URL.",
+          "optional": true
         }
       ]
     },
@@ -5839,7 +7062,7 @@
         {
           "name": "next_offset",
           "type": "String",
-          "description": "Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don‘t support pagination. Offset length can’t exceed 64 bytes.",
+          "description": "Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don't support pagination. Offset length can't exceed 64 bytes.",
           "optional": true
         },
         {
@@ -5851,7 +7074,7 @@
         {
           "name": "switch_pm_parameter",
           "type": "String",
-          "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.",
+          "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.",
           "optional": true
         }
       ]
@@ -5906,13 +7129,13 @@
         {
           "name": "prices",
           "type": "Array of LabeledPrice",
-          "description": "Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)",
+          "description": "Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)",
           "optional": false
         },
         {
           "name": "provider_data",
           "type": "String",
-          "description": "JSON-encoded data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.",
+          "description": "A JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.",
           "optional": true
         },
         {
@@ -5991,6 +7214,12 @@
           "name": "reply_to_message_id",
           "type": "Integer",
           "description": "If the message is a reply, ID of the original message",
+          "optional": true
+        },
+        {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
           "optional": true
         },
         {
@@ -6106,9 +7335,15 @@
           "optional": true
         },
         {
+          "name": "allow_sending_without_reply",
+          "type": "Boolean",
+          "description": "Pass True, if the message should be sent even if the specified replied-to message is not found",
+          "optional": true
+        },
+        {
           "name": "reply_markup",
           "type": "InlineKeyboardMarkup",
-          "description": "A JSON-serialized object for an inline keyboard. If empty, one ‘Play game_title’ button will be shown. If not empty, the first button must launch the game.",
+          "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.",
           "optional": true
         }
       ]
@@ -6164,7 +7399,7 @@
     },
     {
       "name": "getGameHighScores",
-      "description": "\nThis method will currently return scores for the target user, plus two of his closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.\n\nUse this method to get data for high score tables. Will return the score of the specified user and several of his neighbors in a game. On success, returns an Array of GameHighScore objects.",
+      "description": "\nThis method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.\n\nUse this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. On success, returns an Array of GameHighScore objects.",
       "category": "game",
       "fields": [
         {
