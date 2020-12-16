@@ -8,6 +8,7 @@ const TYPE_CONVERSIONS = {
   "String": "string",
   "Integer": "number",
   "Float": "number",
+  "Float number": "number", 
   "Boolean": "boolean",
 
   "True": "true",
