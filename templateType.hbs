@@ -1,14 +1,15 @@
 {{#each imports as |imp impKey|}}
-import {{imp.name}} from "../{{imp.category}}/{{imp.name}}";
+import { {{imp.name}} } from "../{{imp.category}}/{{imp.name}}";
 {{/each}}
 
+
 /**
- * {{schema.description}}
+ * {{{schema.description}}}
  */
-export default interface {{schema.name}} {
+export type {{schema.name}} = {
   {{#each schema.fields as |field fieldKey|}}
   /**
-   * {{field.description}}
+   * {{{field.description}}}
    */
   {{field.name}}{{#if field.optional}}?{{/if}}: {{field.type}};
 
