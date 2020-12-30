@@ -3,12 +3,12 @@ import {{imp.name}} from "../{{imp.category}}/{{imp.name}}";
 {{/each}}
 
 /**
- * {{schema.description}}
+ * {{{schema.description}}}
  */
 export default interface {{schema.name}} {
   {{#each schema.fields as |field fieldKey|}}
   /**
-   * {{field.description}}
+   * {{{field.description}}}
    */
   {{field.name}}{{#if field.optional}}?{{/if}}: {{field.type}};
 
